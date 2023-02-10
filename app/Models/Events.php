@@ -17,6 +17,7 @@ class Events extends Model
         'event_image',
         'initial_pot',
         'slot_price',
+        'game_category_id',
         'choice_array',
         'win_order',
         'option_type',

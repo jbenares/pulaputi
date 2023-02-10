@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RegisterMayor;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RegisterMayorController extends Controller
@@ -16,8 +17,14 @@ class RegisterMayorController extends Controller
     {
         $usertype = auth()->user()->usertype;
 
-        return view('registermayor.index',compact('usertype'));
+        $mayors = User::where("usertype", "Mayor")
+                    ->orwhere("usertype", "Coridor")
+                    ->where("banned","!=","")
+                    ->get();
+
+        return view('registermayor.index',compact('usertype', 'mayors'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,9 +62,14 @@ class RegisterMayorController extends Controller
       * @param  \Illuminate\Http\Request  $request
       * @return \Illuminate\Http\Response
       */
-    public function store(Request $request)
+    public function store_mayor(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'mobile' => ['required', 'string', 'mobile', 'max:11', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
     }
 
     /**

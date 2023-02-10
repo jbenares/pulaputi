@@ -1,0 +1,110 @@
+<?php
+
+namespace App\Http\Controllers;
+use App\Models\User;
+use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Auth;
+
+class UsersController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('users.index'); 
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+     public function login_process(Request $request)
+     {
+         $request->validate([
+             'mobile' => 'required',
+             'password' => 'required',
+         ]);
+    
+         $credentials = $request->only('mobile', 'password');
+         if (Auth::attempt($credentials)) {
+
+            $request->session()->regenerate();
+             return redirect()->intended('dashboard_phakbet')
+                         ->withSuccess('Signed in');
+         }
+   
+         return redirect("dashboard_phakbet")->withSuccess('Login details are not valid');
+     }
+
+     public function dashboard_phakbet()
+     {
+         return view('users.dashboard_phakbet'); 
+     }
+
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        //
+    }
+}

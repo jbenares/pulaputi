@@ -21,6 +21,17 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'usertype',
+        'location',
+        'user_image',
+        'mobile',
+        'gcash',
+        'maya',
+        'coridor_id',
+        'mayor_id',
+        'king_id',
+        'ref_code',
+        
     ];
 
     /**

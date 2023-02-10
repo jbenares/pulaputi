@@ -20,6 +20,7 @@
                                 Home
                             </span>
                         </a>
+                        @if($usertype=='King' || $usertype=='Mayor' || $usertype=='Coridor')
                         <a href="{{ route('registermayor.index') }}" class="flex items-center justify-start w-full p-2 pl-6 my-2 text-gray-400 transition-colors duration-200 border-l-4 border-transparent hover:text-gray-800" href="#">
                             <span class="text-left">
                                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 2048 1792" xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +35,7 @@
                                 </span> -->
                             </span>
                         </a>
+                        @endif
                         @if($usertype=='King')
                             <a href="{{ route('events.index') }}" class="flex items-center justify-start w-full p-2 pl-6 my-2 text-gray-400 transition-colors duration-200 border-l-4 border-transparent hover:text-gray-800" href="#">
                                 <span class="text-left">

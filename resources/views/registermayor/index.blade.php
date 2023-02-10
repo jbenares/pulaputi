@@ -40,17 +40,30 @@
                         <a href="{{ route('registermayor.create') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
                             Register Mayor/Coridor
                         </a>
-                    @elseif($usertype=='King' || $usertype=='Mayor')  
-                        <a href="{{ route('registermayor.create') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
-                            Register Coridor
+                        <a href="{{ route('createphakbet') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                             Register Phakbet
                         </a>
                         <a href="{{ route('phakbetlist') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
                          Phakbet List
                         </a>
+                    @elseif($usertype=='Mayor')  
+                        <a href="{{ route('registermayor.create') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                            Register Coridor
+                        </a>
+                        <a href="{{ route('createphakbet') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                            Register Phakbet
+                         </a>
                     
-                    @elseif($usertype=='King' || $usertype=='Mayor' || $usertype=='Coridor')  
+                        <a href="{{ route('phakbetlist') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                            Phakbet List
+                        </a>
+                    
+                    @elseif($usertype=='Coridor')  
                     <a href="{{ route('createphakbet') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
                         Register Phakbet
+                    </a>
+                    <a href="{{ route('phakbetlist') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                            Phakbet List
                     </a>
                     
                     @endif
@@ -82,13 +95,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($mayors AS $may)
                                 <tr>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                         <div class="flex items-center">
                                            
                                             <div class="ml-3">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
+                                                    {{ $may->created_at}}
                                                 </p>
                                             </div>
                                         </div>
@@ -100,12 +114,12 @@
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
+                                        {{ $may->email }}
                                         </p>
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
+                                        {{ $may->location }}
                                         </p>
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
@@ -118,114 +132,8 @@
                                         </span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <div class="flex items-center">
-                                           
-                                            <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                            </span>
-                                            <span class="relative">
-                                                View
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <div class="flex items-center">
-                                           
-                                            <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                            </span>
-                                            <span class="relative">
-                                                View
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <div class="flex items-center">
-                                           
-                                            <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                            </span>
-                                            <span class="relative">
-                                                View
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
+                                @endforeach
+                               
                             </tbody>
                         </table>
                         <div class="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">

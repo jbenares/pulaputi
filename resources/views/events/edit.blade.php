@@ -6,7 +6,7 @@
 
      <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
                 <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
-                   Create an Event
+                   Update an Event
                 </h1>
                 <!-- <h2 class="text-gray-400 text-md">
                     Here&#x27;s what&#x27;s happening with your ambassador account today.
@@ -52,19 +52,19 @@
     <div class="container max-w-3xl px-4 mx-auto sm:px-8">
   
     <div class="p-6 mt-8">
-        <form action="{{ route('events.store') }}" method="POST"  enctype="multipart/form-data">
+        <form action="{{ route('events.update', $event->id) }}" method="POST"  enctype="multipart/form-data">
             @csrf
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
                        
-                        <input type="text" id="event_name" name="event_name" value="{{old('event_name')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Event Name"/>
+                        <input type="text" id="event_name" name="event_name" value="{{ $event->event_name }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Event Name"/>
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('event_name')" class="mt-2" />
 
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <textarea type="text" id="event_desc" name="event_desc"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Event Description"/>{{old('event_desc')}}</textarea>
+                        <textarea type="text" id="event_desc" name="event_desc"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Event Description"/>{{ $event->event_description }}</textarea>
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('event_desc')" class="mt-2" />
@@ -72,34 +72,35 @@
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
                         <input type="file" id="event_image" name="event_image" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
-                        </div>
+                        <img src="{{ URL::asset('images/'. $event->event_image) }}" width="300px">    
+                    </div>
                     </div>
                     <x-input-error :messages="$errors->get('event_image')" class="mt-2" />
 
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="start_date"  name="start_date"  value="{{old('start_date')}}" placeholder="Start Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="start_date"  name="start_date"  value="{{ $event->date_start }}" placeholder="Start Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
 
              <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="end_date" name="end_date" value="{{old('end_date')}}" placeholder="End Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="end_date" name="end_date"  value="{{ $event->date_end }}"  placeholder="End Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
             
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="initial_pot" name="initial_pot" value="{{old('initial_pot')}}" placeholder="Initial Pot" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="initial_pot" name="initial_pot" value="{{$event->initial_pot}}" placeholder="Initial Pot" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('initial_pot')" class="mt-2" />
             
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="slot_price" name="slot_price" value="{{old('slot_price')}}" placeholder="Slot Price" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="slot_price" name="slot_price" value="{{$event->slot_price}}" placeholder="Slot Price" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('slot_price')" class="mt-2" />
@@ -109,7 +110,7 @@
                         <select type="text" id="game_category" name="game_category" onchange="check_gamecat(this.value)" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                             <option value="">Game Category</option>
                             @foreach($game_category AS $gc)
-                                <option value="{{ $gc->id.'_'.$gc->no_of_outcomes.'_'.$gc->choice_array }}">{{ $gc->category_name }}</option>
+                                <option value="{{ $gc->id.'_'.$gc->no_of_outcomes.'_'.$gc->choice_array }}" {{ $gc->id == $event->game_category_id ? 'selected' : '' }}>{{ $gc->category_name }}</option>
                             @endforeach
                         </select>    
                     </div>

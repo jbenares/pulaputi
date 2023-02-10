@@ -6,6 +6,7 @@ use App\Http\Controllers\EventsController;
 use App\Http\Controllers\TransactionHistoryController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::get('/dashboard', function () {
 // });
 
 Route::resource('registermayor', RegisterMayorController::class);
+Route::post('store_mayor', [RegisterMayorController::class, 'store_mayor'])->name('store_mayor'); 
 Route::get('createphakbet', [RegisterMayorController::class, 'createphakbet'])->name('createphakbet');
 Route::get('phakbetlist', [RegisterMayorController::class, 'phakbetlist'])->name('phakbetlist');
 
@@ -44,4 +46,9 @@ Route::resource('transactionhistory', TransactionHistoryController::class);
 
 Route::get('destroy', [ProfileController::class, 'destroy'])->name('destroy');
 Route::get('/mayor/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified']);
+
+
+Route::get('/login_phakbet', [UsersController::class, 'index'])->name('login_phakbet');
+Route::post('login_process', [UsersController::class, 'login_process'])->name('login_process'); 
+Route::get('dashboard_phakbet', [UsersController::class, 'dashboard_phakbet'])->name('dashboard_phakbet'); 
 require __DIR__.'/auth.php';

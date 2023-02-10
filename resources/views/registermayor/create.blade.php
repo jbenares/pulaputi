@@ -59,11 +59,11 @@
    
    
     <div class="p-6 mt-8">
-        <form action="#">
+        <form action="{{ route('store_mayor') }}" method="POST">
         @if($usertype=='King')
             <div class="flex flex-col mb-2">
                 <div class=" relative ">
-                    <select  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" name="pseudo" placeholder="Pseudo"/>
+                    <select name="usertype" required class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" name="pseudo" placeholder="Pseudo"/>
                         <option value="">User Type</option>
                         <option value="Mayor">Mayor</option>
                         <option value="Phakbet">Phakbet</option>
@@ -72,39 +72,39 @@
                 </div>
         @endif
                 <div class="flex flex-col mb-2">
-                    <div class=" relative ">
-                        <input type="text" id="username" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Username"/>
-                        </div>
-                    </div>
-                
+                  
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="fullname" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Full Name"/>
+                        <input type="text" id="name" name="Full Name" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Full Name"/>
                         </div>
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="mobile" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Mobile"/>
+                        <input name="mobile" type="text" id="mobile" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Mobile"/>
+                        </div>
+                        <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
+                    </div>
+                   
+                    <div class="flex flex-col mb-2">
+                    <div class=" relative ">
+                        <input type="email" id="email" name="email" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email"/>
+                        </div>
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
+                    <div class="flex flex-col mb-2">
+                    <div class=" relative ">
+                        <input type="text" id="gcash" name="gcash" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Gcash"/>
+                        </div>
+
+                    </div>
+                    <div class="flex flex-col mb-2">
+                    <div class=" relative ">
+                        <input type="text" id="maya" name="maya" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Maya"/>
                         </div>
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="email" id="email" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email"/>
-                        </div>
-                    </div>
-                    <div class="flex flex-col mb-2">
-                    <div class=" relative ">
-                        <input type="text" id="gcash" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Gcash"/>
-                        </div>
-                    </div>
-                    <div class="flex flex-col mb-2">
-                    <div class=" relative ">
-                        <input type="text" id="maya" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Maya"/>
-                        </div>
-                    </div>
-                    <div class="flex flex-col mb-2">
-                    <div class=" relative ">
-                        <input type="text" id="location" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Location"/>
+                        <input type="text" id="location" name="location" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Location"/>
                         </div>
                     </div>
                     
