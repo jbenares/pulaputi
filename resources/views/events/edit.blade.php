@@ -6,7 +6,11 @@
 
      <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
                 <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
+                    @if($done==0)
                    Update an Event
+                    @else 
+                    View Event
+                    @endif
                 </h1>
                 <!-- <h2 class="text-gray-400 text-md">
                     Here&#x27;s what&#x27;s happening with your ambassador account today.
@@ -54,6 +58,7 @@
     <div class="p-6 mt-8">
         <form action="{{ route('events.update', $event->id) }}" method="POST"  enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
                        
@@ -71,11 +76,18 @@
 
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
+                    @if($done==0)
                         <input type="file" id="event_image" name="event_image" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
-                        <img src="{{ URL::asset('images/'. $event->event_image) }}" width="300px">    
+                    @endif    
+                        <img src="{{ URL::asset('images/'. $event->event_image) }}" width="300px"> <br>
+                        @if($done==0)
+                        <input type='checkbox' name='remove_photo' value='1'><span style='color:red; font-size:12px'> Remove Photo</span>
+                        @endif   
                     </div>
                     </div>
+                    
                     <x-input-error :messages="$errors->get('event_image')" class="mt-2" />
+                   
 
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
@@ -107,25 +119,60 @@
 
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
+                    @if($done==0)
                         <select type="text" id="game_category" name="game_category" onchange="check_gamecat(this.value)" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                             <option value="">Game Category</option>
                             @foreach($game_category AS $gc)
                                 <option value="{{ $gc->id.'_'.$gc->no_of_outcomes.'_'.$gc->choice_array }}" {{ $gc->id == $event->game_category_id ? 'selected' : '' }}>{{ $gc->category_name }}</option>
                             @endforeach
-                        </select>    
+                        </select>   
+                    @else
+                        <input type='text' value="{{getGameCatDetails($event->game_category_id, 'category_name') }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" >
+                    @endif 
                     </div>
                     </div>
                     <x-input-error :messages="$errors->get('game_category')" class="mt-2" />
+                 
+                  
+                    @php $outcome = getOutcome($event->game_category_id);   @endphp
                     
+                    @if(!empty($event->choice_array))
+                       @php $choices = explode(", ", $event->choice_array); 
+                        @endphp
+
+                       @for($y=0;$y<$outcome;$y++)
+                       @php $field = "choice_array_". $y; @endphp
+                       <input type="hidden" name="{{ $field }}" id = "{{ $field }}" value="{{ $choices[$y] }}" />
+                       @endfor
+                        
+                    @endif
+
+                    @if(!empty($event->choice_array))
+                       @php $choices = explode(", ", $event->choice_array); @endphp
+
+                       @for($x=0;$x<$outcome;$x++)
+                       @php $field = "choice_array_". $x; @endphp
+                            <div class="flex flex-col mb-2 added">
+                                <div class=" relative ">
+                                <input type="text" id="{{ $field }}" name="{{ $field }}" value="{{ $choices[$x] }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                            </div>
+                            </div>
+                       
+                        @endfor
+                        
+                    @endif
                     <div id="outcomelist" class="alt1" style="padding:10px;">
                         
                     </div>
-        
+                    <input type="hidden" id="game_category_id" value="{{ $event->game_category_id }}">
+
+                        @if($done == 0)
                             <div class="flex w-full my-4">
                                 <button type="submit" class="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                                 Save Event
                                 </button>
                             </div>
+                        @endif
                         </form>
 
             </div>

@@ -60,13 +60,14 @@
    
     <div class="p-6 mt-8">
         <form action="{{ route('store_mayor') }}" method="POST">
+        @csrf
         @if($usertype=='King')
             <div class="flex flex-col mb-2">
                 <div class=" relative ">
                     <select name="usertype" required class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" name="pseudo" placeholder="Pseudo"/>
                         <option value="">User Type</option>
                         <option value="Mayor">Mayor</option>
-                        <option value="Phakbet">Phakbet</option>
+                        <option value="Coridor">Coridor</option>
                     </select>
                     </div>
                 </div>
@@ -75,7 +76,7 @@
                   
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="name" name="Full Name" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Full Name"/>
+                        <input type="text" id="name" name="name" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Full Name"/>
                         </div>
                     </div>
                     <div class="flex flex-col mb-2">
@@ -95,26 +96,21 @@
                     <div class=" relative ">
                         <input type="text" id="gcash" name="gcash" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Gcash"/>
                         </div>
-
+                        <x-input-error :messages="$errors->get('gcash')" class="mt-2" />
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
                         <input type="text" id="maya" name="maya" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Maya"/>
                         </div>
+                        <x-input-error :messages="$errors->get('maya')" class="mt-2" />
                     </div>
-                    <div class="flex flex-col mb-2">
-                    <div class=" relative ">
-                        <input type="text" id="location" name="location" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Location"/>
-                        </div>
+                 
+                    <div class="flex w-full my-4">
+                        <button type="submit" class="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        Register
+                        </button>
                     </div>
-                    
-                      
-                            <div class="flex w-full my-4">
-                                <button type="submit" class="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                                Register
-                                </button>
-                            </div>
-                        </form>
+                </form>
 
             </div>
 </div>

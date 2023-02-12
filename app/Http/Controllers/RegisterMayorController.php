@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RegisterMayor;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterMayorController extends Controller
 {
@@ -31,10 +32,20 @@ class RegisterMayorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $usertype = auth()->user()->usertype;
-
+        $clientIP = "49.145.111.137";
+        //$clientIP =  request()->ip(); 
+        $data = \Location::get($clientIP);  
+       
+        $region_code= $data->regionCode;
+        $region= $data->regionName;
+        $city= $data->cityName;
+       
+      //  $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+        //echo $details->city; // -> "Mountain View"
+        
         return view('registermayor.create',compact('usertype'));
     }
 
@@ -65,11 +76,29 @@ class RegisterMayorController extends Controller
     public function store_mayor(Request $request)
     {
         $request->validate([
+            'usertype' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'mobile' => ['required', 'string', 'mobile', 'max:11', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'gcash'=>'required|numeric|min:11',
+            'maya'=>'required|numeric|min:11',
         ]);
+
+        $pw= generateRandom(10);
+        $ref_code = $pw= generateRandom(6);
+       
+        $data = Events::create([
+            'name'=>$request->input('name'),
+            'email'=>$request->input('email'),
+            'password'=> Hash::make($pw),
+            'usertype'=>$request->input('usertype'),
+            'gcash'=>$request->input('gcash'),
+            'maya' =>$request->input('maya'),
+            'king_id'=>auth()->user()->id,
+            'mayor_id'=>$request->input('slot_price'),
+            'ref_code'=>$ref_code
+        ]);
+        return redirect()->route('events.index')->with('status','Event Successfully added!');
     }
 
     /**
