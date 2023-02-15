@@ -35,18 +35,15 @@ class RegisterMayorController extends Controller
     public function create(Request $request)
     {
         $usertype = auth()->user()->usertype;
-        $clientIP = "49.145.111.137";
-        //$clientIP =  request()->ip(); 
-        $data = \Location::get($clientIP);  
-       
-        $region_code= $data->regionCode;
-        $region= $data->regionName;
-        $city= $data->cityName;
-       
+        $mayors = User::select('id','name')
+                        ->where('usertype','Mayor')
+                        ->where('banned','0')
+                        ->get();
+
       //  $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
         //echo $details->city; // -> "Mountain View"
         
-        return view('registermayor.create',compact('usertype'));
+        return view('registermayor.create',compact('usertype', 'mayors'));
     }
 
     /**
@@ -79,26 +76,35 @@ class RegisterMayorController extends Controller
             'usertype' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'mobile' => ['required', 'string', 'mobile', 'max:11', 'unique:'.User::class],
-            'gcash'=>'required|numeric|min:11',
-            'maya'=>'required|numeric|min:11',
+            'mobile' => ['required', 'string', 'max:11', 'unique:'.User::class],
         ]);
 
         $pw= generateRandom(10);
-        $ref_code = $pw= generateRandom(6);
-       
-        $data = Events::create([
+        $ref_code = generateRandom(6);
+        $clientIP = "49.145.111.137";
+        //$clientIP =  request()->ip(); 
+        $data = \Location::get($clientIP);  
+        
+        $region_code= $data->regionCode;
+        $region= $data->regionName;
+        $city= $data->cityName;
+
+        $data = User::create([
             'name'=>$request->input('name'),
             'email'=>$request->input('email'),
             'password'=> Hash::make($pw),
+            'mobile'=>$request->input('mobile'),
             'usertype'=>$request->input('usertype'),
             'gcash'=>$request->input('gcash'),
             'maya' =>$request->input('maya'),
             'king_id'=>auth()->user()->id,
-            'mayor_id'=>$request->input('slot_price'),
-            'ref_code'=>$ref_code
+            'mayor_id'=>$request->input('mayor'),
+            'ref_code'=>$ref_code,
+            'region_code'=>$region_code,
+            'region'=>$region,
+            'city'=>$city
         ]);
-        return redirect()->route('events.index')->with('status','Event Successfully added!');
+        return redirect()->route('registermayor.create')->with('status','Registered successfully! Your referral code is: ' . $ref_code  .'. Your password is: '. $pw .'');
     }
 
     /**

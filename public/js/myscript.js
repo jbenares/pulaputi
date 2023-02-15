@@ -25,4 +25,3 @@ function check_gamecat(val){
  
 
 }
-

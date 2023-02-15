@@ -56,7 +56,14 @@
 
     <div class="container max-w-3xl px-4 mx-auto sm:px-8">
   
-   
+    @if (session('status'))
+                <br>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <span class="px-4 py-2  text-base rounded-full text-green-600  bg-green-200 ">
+                            {{ session('status') }}
+                        </span>
+                    </div>
+                @endif
    
     <div class="p-6 mt-8">
         <form action="{{ route('store_mayor') }}" method="POST">
@@ -64,7 +71,7 @@
         @if($usertype=='King')
             <div class="flex flex-col mb-2">
                 <div class=" relative ">
-                    <select name="usertype" required class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" name="pseudo" placeholder="Pseudo"/>
+                    <select name="usertype" required id="usertype"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         <option value="">User Type</option>
                         <option value="Mayor">Mayor</option>
                         <option value="Coridor">Coridor</option>
@@ -72,35 +79,39 @@
                     </div>
                 </div>
         @endif
-                <div class="flex flex-col mb-2">
+
+            <div id="mayorDD" class="flex flex-col mb-2" style="display:none">
+                <select name="mayor" id="mayor"  class='form-control rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'></select>
+            </div>
+               
                   
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="name" name="name" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Full Name"/>
+                        <input type="text" id="name" name="name" value="{{old('name')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Full Name"/>
                         </div>
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input name="mobile" type="text" id="mobile" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Mobile"/>
+                        <input name="mobile" type="text" id="mobile" value="{{old('mobile')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Mobile"/>
                         </div>
                         <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
                     </div>
                    
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="email" id="email" name="email" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email"/>
+                        <input type="email" id="email" name="email" value="{{old('email')}}"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Email"/>
                         </div>
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="gcash" name="gcash" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Gcash"/>
+                        <input type="text" id="gcash" name="gcash" value="{{old('gcash')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Gcash"/>
                         </div>
                         <x-input-error :messages="$errors->get('gcash')" class="mt-2" />
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="maya" name="maya" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Maya"/>
+                        <input type="text" id="maya" name="maya" value="{{old('maya')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Maya"/>
                         </div>
                         <x-input-error :messages="$errors->get('maya')" class="mt-2" />
                     </div>
@@ -114,5 +125,47 @@
 
             </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('input').attr('autocomplete','off');
+
+            $('#usertype').on('change', function() {
+                var x = document.getElementById("mayorDD");
+               var usertype = $(this).val();
+                if(usertype == 'Coridor'){
+                    
+                     x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+               if(usertype) {
+                   $.ajax({
+                       url: '/getMayor/'+usertype,
+                       type: "GET",
+                       data : {"_token":"{{ csrf_token() }}"},
+                       dataType: "json",
+                       success:function(data)
+                       {
+                         if(data){
+                            $('#mayor').empty();
+                            $('#mayor').append('<option hidden>Choose Mayor</option>'); 
+                            $.each(data, function(key, mayor){
+                                $('select[name="mayor"]' ).append('<option value="'+ mayor.id +'">' + mayor.name+ '</option>');
+                            });
+                        }else{
+                            $('#mayor').empty();
+                        }
+                     }
+                   });
+               }else{
+                 $('#mayor').empty();
+               }
+            });
+            });
+        </script>
+
     </main>
 </x-app-layout>

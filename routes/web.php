@@ -38,6 +38,12 @@ Route::post('store_mayor', [RegisterMayorController::class, 'store_mayor'])->nam
 Route::get('createphakbet', [RegisterMayorController::class, 'createphakbet'])->name('createphakbet');
 Route::get('phakbetlist', [RegisterMayorController::class, 'phakbetlist'])->name('phakbetlist');
 
+Route::get('getMayor/{id}', function ($usertype) {
+    $id = auth()->user()->id;
+    $mayor = App\Models\User::where('king_id',$id)
+                            ->where('usertype', 'Mayor')->get();
+    return response()->json($mayor);
+});
 
 Route::resource('events', EventsController::class);
 Route::get('finishedevents', [EventsController::class, 'finishedevents'])->name('finishedevents');
