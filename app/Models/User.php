@@ -31,6 +31,9 @@ class User extends Authenticatable
         'mayor_id',
         'king_id',
         'ref_code',
+        'region_code',
+        'region',
+        'city'
         
     ];
 

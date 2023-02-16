@@ -78,16 +78,28 @@
                             <thead>
                                 <tr>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                        Registration Date
+                                        Usertype
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                        Username
+                                        Mayor
+                                    </th>
+                                    <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                        Full Name
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
                                         Email
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                        Location
+                                        Region
+                                    </th>
+                                    <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                        City
+                                    </th>
+                                    <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                        Ref Code
+                                    </th>
+                                    <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                        Current Wallet
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
                                         
@@ -102,14 +114,21 @@
                                            
                                             <div class="ml-3">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $may->created_at}}
+                                                    {{ $may->usertype}}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
+                                         @if($may->usertype=='Coridor')
+                                           {{ getUpline('mayor', $may->id); }} 
+                                         @endif
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                        {{ $may->name }}
                                         </p>
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
@@ -119,15 +138,38 @@
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                        {{ $may->location }}
+                                        {{ $may->region }}
                                         </p>
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                        {{ $may->city }}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                        {{ $may->ref_code }}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                        {{ $may->curr_wallet }}
+                                        </p>
+                                    </td>
+                                   
+                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-blue-900">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-blue-200 rounded-full opacity-50">
+                                            </span>
+                                            <span class="relative">
+                                                <a href="" onclick="confirmation({{ $may->id }})"> Reset PW </a>
+                                            </span>
+                                        </span>
                                         <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
                                             <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
                                             </span>
                                             <span class="relative">
-                                                View
+                                                <a href="{{ route('registermayor.show', $may->id) }}">View</a>
                                             </span>
                                         </span>
                                     </td>
@@ -171,3 +213,13 @@
         
     </main>
 </x-app-layout>
+<script type="text/javascript">
+    function confirmation(id){
+        let text = "Are you sure you want to reset the password?\nNew password will be sent thru email.";
+        if (confirm(text) == true) {
+           alert('hi');
+        } else {
+            alert('no');
+        }
+     }
+</script>

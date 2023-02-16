@@ -18,9 +18,9 @@ class RegisterMayorController extends Controller
     {
         $usertype = auth()->user()->usertype;
 
-        $mayors = User::where("usertype", "Mayor")
+        $mayors = User::where("banned","=","0")
+                    ->where("usertype", "Mayor")
                     ->orwhere("usertype", "Coridor")
-                    ->where("banned","!=","")
                     ->get();
 
         return view('registermayor.index',compact('usertype', 'mayors'));
@@ -113,9 +113,12 @@ class RegisterMayorController extends Controller
      * @param  \App\Models\RegisterMayor  $registerMayor
      * @return \Illuminate\Http\Response
      */
-    public function show(RegisterMayor $registerMayor)
+    
+    public function show($id)
     {
-        //
+        $details = User::find($id);
+        $usertype = auth()->user()->usertype;
+        return view('registermayor.show',compact('details', 'usertype'));
     }
 
     /**
