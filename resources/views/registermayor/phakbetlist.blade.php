@@ -1,25 +1,10 @@
 <x-app-layout>
     <main class="relative h-screen overflow-hidden bg-gray-100 white:bg-gray-800">
+    <link rel="stylesheet" href="{{ URL::asset('css/jquery.dataTables.min.css') }}">
     <x-sidebar />
     <x-header />
 
 
-    <!-- <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
-    <ul class="flex flex-wrap -mb-px">
-        <li class="mr-2">
-            <a href="{{ route('registermayor.create') }}" class="inline-block p-4 border-b-2 rounded-t-lg  hover:text-gray-600 hover:border-gray-300 ">
-                Register Mayor/Coridor
-            </a>
-        </li>
-    
-        <li class="mr-2">
-            <a href="{{ route('createphakbet') }}" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 ">
-            Register Phakbet
-            </a>
-        </li>
-      
-    </ul>
-</div> -->
 
 <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
                 <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
@@ -32,50 +17,78 @@
                 <div class="flex items-center space-x-4">
                 @if($usertype=='King')
                      <a href="{{ route('registermayor.index') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
-                            Mayor/Coridor List
+                            Mayor/Kuridor List
                     </a>
-                @elseif($usertype=='Mayor') 
-                    <a href="{{ route('registermayor.index') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
-                            Coridor List
-                    </a>
-                @endif
-                  
-                @if($usertype=='King')
                     <a href="{{ route('registermayor.create') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
-                            Register Mayor/Coridor
+                            Register Mayor/Kuridor
                     </a>
-                @elseif($usertype=='Mayor') 
-                    <a href="{{ route('registermayor.create') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
-                            Register Coridor
-                    </a>
-               
-                @elseif($usertype=='King' || $usertype=='Mayor' || $usertype=='Coridor') 
                     <a href="{{ route('createphakbet') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
                         Register Phakbet
                     </a>
+                @elseif($usertype=='Mayor') 
+                    <a href="{{ route('registermayor.index') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                            Kuridor List
+                    </a>
+                    <a href="{{ route('registermayor.create') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                            Register Kuridor
+                    </a>
+                    <a href="{{ route('createphakbet') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                        Register Phakbet
+                    </a>
+                 @elseif($usertype=='Coridor')
+                 <a href="{{ route('createphakbet') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
+                        Register Phakbet
+                    </a> 
                 @endif
-                   
-                   
+                </div>
+                <br>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-4 py-2  text-base rounded-full text-red-600  bg-red-200 ">
+                        Current wallet is 0
+                    </span>
+                    <span class="px-4 py-2  text-base rounded-full text-yellow-600  bg-yellow-100 ">
+                        No bets for today
+                    </span>
+                    
                 </div>
 
-         
+                @if (session('status'))
+                <br>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <span class="px-4 py-2  text-base rounded-full text-green-600  bg-green-200 ">
+                            {{ session('status') }}
+                        </span>
+                    </div>
+                @endif
+              
+               
+
           
                 <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
                     <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-                        <table class="min-w-full leading-normal">
+                        <table class="min-w-full leading-normal" id="table_overall">
                             <thead>
                                 <tr>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                        Registration Date
+                                        Full Name
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                        Username
+                                        Mayor
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                        Email
+                                        Kuridor
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
-                                        Location
+                                        Mobile
+                                    </th>
+                                    <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                        Bets Today
+                                    </th>
+                                    <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                    Total Bets for this Month
+                                    </th>
+                                    <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                       Current Wallet
                                     </th>
                                     <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
                                         
@@ -83,184 +96,136 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php $count=1; @endphp
+                                @foreach($phakbets AS $p)
+
+                                @php $betstoday= getBetsToday($p->id) @endphp
+                                    @if($p->curr_wallet == 0 && $betstoday >0)
+                                        @php $bg = "bg-red-200"; @endphp
+                                    @elseif($p->curr_wallet > 0 && $betstoday == 0)
+                                         @php $bg = "bg-yellow-100"; @endphp
+                                    @elseif($p->curr_wallet == 0 && $betstoday == 0)
+                                         @php $bg = "bg-red-200"; @endphp
+                                    @elseif($p->curr_wallet > 0 && $betstoday > 0)
+                                         @php $bg = "bg-white"; @endphp
+                                    @else 
+                                        @php $bg = "bg-white"; @endphp
+                                    @endif
+
                                 <tr>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                    <td class="px-5 py-5 text-sm {{ $bg }} border-b border-gray-200">
                                         <div class="flex items-center">
                                            
                                             <div class="ml-3">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
+                                                   {{ $p->name }}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                    <td class="px-5 py-5 text-sm {{ $bg }} border-b border-gray-200">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
+                                         {{ getUpline('mayor', $p->id, 'name'); }} 
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 text-sm {{ $bg }} border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                        {{ getUpline('coridor', $p->id, 'name'); }} 
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 text-sm {{ $bg }} border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                            {{ $p->mobile }}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 text-sm {{ $bg }} border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                         {{ $betstoday }}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 text-sm {{ $bg }} border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                        {{ getBetsMonth($p->id) }}
+                                        </p>
+                                    </td>
+                                    
+                                    <td class="px-5 py-5 text-sm {{ $bg }} border-b border-gray-200">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                        P{{ number_format($p->curr_wallet,2) }}
                                         </p>
                                     </td>
                                     <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                    
+                                    <!-- <button data-modal-target="authentication-modal-{{ $count }}" data-modal-toggle="authentication-modal-{{ $count }}" class="relative inline-block px-3 py-1 font-semibold leading-tight text-blue-900">
+                                            <span aria-hidden="true" class="absolute inset-0 bg-blue-200 rounded-full opacity-50">
+                                            </span>
+                                            <span class="relative">
+                                                Add Wallet
+                                            </span></button> -->
                                         <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
                                             <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
                                             </span>
                                             <span class="relative">
-                                                View
+                                            <a href="{{ route('view_profile', $p->id) }}">View</a>
                                             </span>
                                         </span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <div class="flex items-center">
-                                           
-                                            <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
-                                                </p>
+
+                                
+
+                                    <div id="authentication-modal-{{ $count }}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">                   
+                                        <div class="relative w-full h-full max-w-md md:h-auto">
+                                            <!-- Modal content -->
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="authentication-modal-{{ $count }}">
+                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                                    <div class="px-6 py-6 lg:px-8">
+                                                    <div class="flex items-center">
+                                                        <button type="button" class="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                                            
+                                                            Full Name
+                                                        </button>
+                                                        <button type="button" class="w-full px-4 py-2 text-base font-medium text-black bg-white border rounded-r-md hover:bg-gray-100">
+                                                            <strong> {{ $p->name }}</strong>
+                                                        </button>
+                                                    </div><br>
+                                                    <p>
+                                                
+                                                    </p><br>
+                                                    <form class="space-y-6" action="{{ route('add_wallet', ['count'=>$count]) }}" method="POST">
+                                                     @csrf
+                                                     Add Wallet Amount
+                                                    <input type="text" name="wallet_{{ $count }}" id="wallet_{{ $count }}" required onblur="checkamount(this.value, {{ $count }})" class=" rounded-lg flex-1 appearance-none border border-gray-300 py-2 px-4 bg-gray-50  text-gray-900 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent w-full" >
+                                                    <span class="text-red-500 text-xs" id='wallet_error_{{ $count }}'></span><br><br>
+                                                    <input type="hidden" name="user_id_{{ $count }}" id="user_id_{{ $count }}" value="{{ $p->id}} " >
+                                                    
+                                                    <button type="submit" id="submit_{{ $count }}" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Wallet</button>
+                                        
+                                                
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                            </span>
-                                            <span class="relative">
-                                                View
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <div class="flex items-center">
-                                           
-                                            <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                            </span>
-                                            <span class="relative">
-                                                View
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <div class="flex items-center">
-                                           
-                                            <div class="ml-3">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    December 12, 2022
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            jonahb@gmail.com
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Bacolod
-                                        </p>
-                                    </td>
-                                    <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                            <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                            </span>
-                                            <span class="relative">
-                                                View
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
+                                    </div> 
+
+                                @php $count++; @endphp
+                                @endforeach
+                                <input type="hidden" name="user_wallet" id="user_wallet" value="{{ $userwallet}} " >
                             </tbody>
                         </table>
-                        <div class="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
-                            <div class="flex items-center">
-                                <button type="button" class="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100">
-                                    <svg width="9" fill="currentColor" height="8" class="" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <button type="button" class="w-full px-4 py-2 text-base text-indigo-500 bg-white border-t border-b hover:bg-gray-100 ">
-                                    1
-                                </button>
-                                <button type="button" class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100">
-                                    2
-                                </button>
-                                <button type="button" class="w-full px-4 py-2 text-base text-gray-600 bg-white border-t border-b hover:bg-gray-100">
-                                    3
-                                </button>
-                                <button type="button" class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100">
-                                    4
-                                </button>
-                                <button type="button" class="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100">
-                                    <svg width="9" fill="currentColor" height="8" class="" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                 
-               
+                       
             </div>
         </div>
         
     </main>
 </x-app-layout>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#table_overall').DataTable();
+    } );
+</script>

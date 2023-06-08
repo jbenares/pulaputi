@@ -1,25 +1,41 @@
 <x-guest-layout>
+@if(session('status'))
+        
+    <span class="mb-4 text-sm text-green-500  ">
+        {{ session('status') }}
+    </span>
+      <br><br>
+ @endif
+                  
     <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+        {{ __('Forgot your password? No problem. Just let us know your mobile number and we will text you your new password.') }}
     </div>
 
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+  
 
-    <form method="POST" action="{{ route('password.email') }}">
+    <form method="POST" action="{{ route('forgot_password') }}">
         @csrf
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-input-label for="mobile" :value="__('Mobile Number')" />
+            <x-text-input id="mobile" class="block mt-1 w-full" type="text" name="mobile" :value="old('mobile')" required  onkeypress="return onlyNumberKey(event)" autofocus />
+            <x-input-error :messages="$errors->get('mobile')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
             <x-primary-button>
-                {{ __('Email Password Reset Link') }}
+                {{ __('Send New Password') }}
             </x-primary-button>
         </div>
     </form>
 </x-guest-layout>
+<script>
+    function onlyNumberKey(evt) {             
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+    return true;
+}
+</script>

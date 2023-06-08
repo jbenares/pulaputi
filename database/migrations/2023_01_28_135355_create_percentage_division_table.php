@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('king', 10, 2)->default(0);
             $table->decimal('mayor', 10, 2)->default(0);
             $table->decimal('coridor', 10, 2)->default(0);
-            $table->decimal('wabapp', 10, 2)->default(0);
+            $table->decimal('webapp', 10, 2)->default(0);
             $table->decimal('liaison', 10, 2)->default(0);
             $table->decimal('misc', 10, 2)->default(0);
             $table->decimal('tax', 10, 2)->default(0);

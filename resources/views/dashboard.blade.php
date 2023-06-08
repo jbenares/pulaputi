@@ -4,15 +4,15 @@
     <x-header />
         <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
                     <h1 class="text-4xl font-semibold text-gray-800 white:text-white">
-                        Good afternoon, Charlie
+                        Good day, {{ $username }}!
                     </h1>
                     <h2 class="text-gray-400 text-md">
-                        Here&#x27;s what&#x27;s happening with your ambassador account today.
+                        Here&#x27;s what&#x27;s happening with your account today.
                     </h2>
                     <div class="flex flex-col items-center w-full my-6 space-y-4 md:space-x-4 md:space-y-0 md:flex-row">
                         <div class="w-full md:w-6/12">
                             <div class="relative w-full overflow-hidden bg-white shadow-lg white:bg-gray-700">
-                                <a href="#" class="block w-full h-full">
+                                <a href="{{ route('transactionhistory.index') }}" class="block w-full h-full">
                                     <div class="flex items-center justify-between px-4 py-6 space-x-4">
                                         <div class="flex items-center">
                                             <span class="relative p-5 bg-yellow-100 rounded-full">
@@ -22,18 +22,16 @@
                                                 </svg>
                                             </span>
                                             <p class="ml-2 text-sm font-semibold text-gray-700 border-b border-gray-200 white:text-white">
-                                                Level 2 Ambassador
+                                                Current Wallet
                                             </p>
                                         </div>
                                         <div class="mt-6 text-xl font-bold text-black border-b border-gray-200 md:mt-0 white:text-white">
-                                            $44,453.39
-                                            <span class="text-xs text-gray-400">
-                                                /$100K
-                                            </span>
+                                         P {{ number_format(getUserDetails(auth()->user()->id, 'curr_wallet'),2) }}
+                                            
                                         </div>
                                     </div>
                                     <div class="w-full h-3 bg-gray-100">
-                                        <div class="w-2/5 h-full text-xs text-center text-white bg-green-400">
+                                        <div class="w-5/5 h-full text-xs text-center text-white bg-blue-600">
                                         </div>
                                     </div>
                                 </a>
@@ -43,20 +41,23 @@
                             <div class="w-1/2">
                                 <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
                                     <p class="text-2xl font-bold text-black white:text-white">
-                                        12
+                                        {{ $activeevents }}
                                     </p>
                                     <p class="text-sm text-gray-400">
-                                        Active projects
+                                        Current Active Events
                                     </p>
                                 </div>
+                              
                             </div>
                             <div class="w-1/2">
                                 <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
                                     <p class="text-2xl font-bold text-black white:text-white">
-                                        $93.76
+                                        P{{ number_format($total_profit,2) }}
                                     </p>
                                     <p class="text-sm text-gray-400">
-                                        Commission in approval
+
+                                   
+                                        Total Profit up to Date
                                     </p>
                                     <span class="absolute p-4 bg-purple-500 rounded-full top-2 right-4">
                                         <svg width="40" fill="currentColor" height="40" class="absolute h-4 text-white transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
@@ -68,418 +69,207 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <button class="flex items-center px-4 py-2 text-gray-400 border border-gray-300 rounded-r-full rounded-tl-sm rounded-bl-full text-md">
-                            <svg width="20" height="20" fill="currentColor" class="mr-2 text-gray-400" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M192 1664h288v-288h-288v288zm352 0h320v-288h-320v288zm-352-352h288v-320h-288v320zm352 0h320v-320h-320v320zm-352-384h288v-288h-288v288zm736 736h320v-288h-320v288zm-384-736h320v-288h-320v288zm768 736h288v-288h-288v288zm-384-352h320v-320h-320v320zm-352-864v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm736 864h288v-320h-288v320zm-384-384h320v-288h-320v288zm384 0h288v-288h-288v288zm32-480v-288q0-13-9.5-22.5t-22.5-9.5h-64q-13 0-22.5 9.5t-9.5 22.5v288q0 13 9.5 22.5t22.5 9.5h64q13 0 22.5-9.5t9.5-22.5zm384-64v1280q0 52-38 90t-90 38h-1408q-52 0-90-38t-38-90v-1280q0-52 38-90t90-38h128v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h384v-96q0-66 47-113t113-47h64q66 0 113 47t47 113v96h128q52 0 90 38t38 90z">
-                                </path>
-                            </svg>
-                            Last month
-                            <svg width="20" height="20" class="ml-2 text-gray-400" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1408 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z">
-                                </path>
-                            </svg>
-                        </button>
-                        <span class="text-sm text-gray-400">
-                            Compared to oct 1- otc 30, 2020
-                        </span>
-                    </div>
-                    <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
-                        <div class="w-full">
-                            <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
-                                <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max white:text-white">
-                                    Project Reffered
-                                </p>
-                                <div class="flex items-end my-6 space-x-2">
-                                    <p class="text-5xl font-bold text-black white:text-white">
-                                        12
+                   
+                <div class="h-screen pt-2 pb-24 pl-2 pr-2 overflow-auto md:pt-0 md:pr-0 md:pl-0">
+                    <div class="flex flex-col flex-wrap sm:flex-row ">
+                        <div class="w-full sm:w-1/2 xl:w-1/3">
+                            <div class="mb-4">
+                                
+                            <div class="relative w-full p-4 overflow-hidden bg-white shadow-lg rounded-xl md:w-100 dark:bg-gray-800">
+                                <div class="flex items-center justify-between w-full mb-8">
+                                    <p class="text-xl font-normal text-gray-800 dark:text-white">
+                                        Recent Transactions
                                     </p>
-                                    <span class="flex items-center text-xl font-bold text-green-500">
-                                        <svg width="20" fill="currentColor" height="20" class="h-3" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                            </path>
-                                        </svg>
-                                        22%
+                                    <a href="{{ route('transactionhistory.index') }}" class="flex items-center text-sm text-gray-300 border-0 hover:text-gray-600 dark:text-gray-50 dark:hover:text-white focus:outline-none">
+                                        VIEW ALL
+                                    </a>
+                                </div>
+                               
+                                @foreach($alltransactions AS $all)
+                                <div class="flex items-start justify-between mb-6 rounded">
+                                    <span class="p-2 text-white bg-blue-200 rounded-full dark:text-gray-800">
+                                    <svg fill="#000000" width="25px" height="25px" viewBox="0 0 24 24" id="date-double-check" data-name="Flat Color" xmlns="http://www.w3.org/2000/svg" class="icon flat-color"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="primary" d="M21,7H3A1,1,0,0,0,2,8V20a2,2,0,0,0,2,2H20a2,2,0,0,0,2-2V8A1,1,0,0,0,21,7Z" style="fill: #000000;"></path><path id="secondary" d="M22,6V9H2V6A2,2,0,0,1,4,4H20A2,2,0,0,1,22,6ZM9.71,17.71l4-4a1,1,0,0,0-1.42-1.42L9,15.59l-1.29-1.3a1,1,0,0,0-1.42,1.42l2,2a1,1,0,0,0,1.42,0Zm4,0,4-4a1,1,0,0,0-1.42-1.42l-4,4a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0Z" style="fill: #2ca9bc;"></path><path id="primary-2" data-name="primary" d="M16,7a1,1,0,0,1-1-1V3a1,1,0,0,1,2,0V6A1,1,0,0,1,16,7ZM9,6V3A1,1,0,0,0,7,3V6A1,1,0,0,0,9,6Z" style="fill: #000000;"></path></g></svg>
                                     </span>
+                                   
+                                    <div class="flex items-center justify-between w-full">
+                                        <div class="flex flex-col items-start justify-between w-full ml-2 text-sm">
+                                            <p class="text-gray-700 dark:text-white">
+                                                @if($all->transfer_id != 0)
+                                                    <span class="mr-1 font-bold">
+                                                    {{ $all->transaction_type }} 
+                                                    </span>
+                                                    - 
+                                                    @if($all->credit>0) 
+                                                           Credited the amount of {{ number_format($all->credit,2) }}
+                                                        @else 
+                                                          Debited the amount of {{ number_format($all->debit,2) }}
+                                                        @endif
+                                                    <p class="text-gray-300">
+                                                        {{ date('M d, y', strtotime($all->transaction_date))}}
+                                                    </p>
+                                                @endif
+
+                                                @if($all->event_id == 0 && $all->transfer_id == 0 && $all->bet_id == 0)
+
+                                                        @if($all->credit>0) 
+                                                        <span class="mr-1 font-bold">{{ $all->transaction_type }}</span> Credited the amount of {{ number_format($all->credit,2) }}
+                                                        @else 
+                                                        <span class="mr-1 font-bold">{{ $all->transaction_type }}</span> Debited the amount of {{ number_format($all->debit,2) }}
+                                                        @endif
+
+                                                    
+                                                    <p class="text-gray-300">
+                                                        {{ date('M d, y', strtotime($all->transaction_date))}}
+                                                    </p>
+                                                @endif
+
+                                                @if($all->event_id != 0 && $all->bet_id != 0)
+                                                 
+
+                                                    @if($all->credit>0) 
+                                                    <span class="mr-1 font-bold">{{ getEventDetailsFromBet($all->bet_id, "event_name") }} {{ $all->transaction_type }} </span> - Credited the amount of {{ number_format($all->credit,2) }}
+                                                    @else 
+                                                    <span class="mr-1 font-bold">{{ getEventDetailsFromBet($all->bet_id, "event_name") }} {{ $all->transaction_type }} </span> - Debited the amount of {{ number_format($all->debit,2) }}
+                                                    @endif
+
+                                                    <p class="text-gray-300">
+                                                        {{ date('M d, y', strtotime($all->transaction_date))}}
+                                                    </p>
+                                                @endif
+
+                                                @if($all->event_id != 0 && $all->bet_id == 0)
+                                                 
+
+                                                    @if($all->credit>0) 
+                                                    <span class="mr-1 font-bold">{{ $all->transaction_type }} ({{ $all->transaction_type }}) </span> - Credited the amount of {{ number_format($all->credit,2) }}
+                                                    @else 
+                                                    <span class="mr-1 font-bold">{{ $all->transaction_type }} ({{ $all->transaction_type }}) </span> - Debited the amount of {{ number_format($all->debit,2) }}
+                                                    @endif
+
+                                                    <p class="text-gray-300">
+                                                        {{ date('M d, y', strtotime($all->transaction_date))}}
+                                                    </p>
+                                                @endif
+                                            </p>
+                                          
+                                        </div>
+                                    </div>
+                                 
                                 </div>
-                                <div class="white:text-white">
-                                    <div class="flex items-center justify-between pb-2 mb-2 text-sm border-b border-gray-200 sm:space-x-12">
-                                        <p>
-                                            Unique URL
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            34
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                22%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Embedded form
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            13
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                12%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
-                                        <p>
-                                            New visitor
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            45
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                41%
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
+                          
+                            </div>
+                           
+                                
                         </div>
-                        <div class="w-full">
-                            <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
-                                <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max white:text-white">
-                                    Project Paid
-                                </p>
-                                <div class="flex items-end my-6 space-x-2">
-                                    <p class="text-5xl font-bold text-black white:text-white">
-                                        23
+                        <div class="w-full sm:w-1/2 xl:w-1/3">
+                            <div class="mx-0 mb-4 sm:ml-4 xl:mr-4">
+                                <div class="w-full bg-white shadow-lg rounded-2xl dark:bg-gray-700">
+                                    <p class="p-4 font-bold text-black text-md dark:text-white">
+                                        Other Details
+                                        <span class="ml-2 text-sm text-gray-500 dark:text-gray-300 dark:text-white">
+                                           
+                                        </span>
                                     </p>
-                                    <span class="flex items-center text-xl font-bold text-green-500">
-                                        <svg width="20" fill="currentColor" height="20" class="h-3" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                            </path>
-                                        </svg>
-                                        12%
-                                    </span>
-                                </div>
-                                <div class="white:text-white">
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            User paid
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            21
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                20%
+                                    <ul>
+                                        <li class="flex items-center justify-between py-3 text-gray-600 border-b-2 border-gray-100 dark:text-gray-200 dark:border-gray-800">
+                                            <div class="flex items-center justify-start text-sm">
+                                                <span class="mx-4">
+                                                 Number of Mayor
+                                                </span>
+                                                
+                                            </div>
+                                           <span width="20" height="20" fill="currentColor" class="mx-4 text-green-600 font-bold dark:text-gray-300" viewBox="0 0 1024 1024">
+                                           {{ $mayorcount }}
                                             </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Income
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            10
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                2%
+                                        </li>
+                                        <li class="flex items-center justify-between py-3 text-gray-600 border-b-2 border-gray-100 dark:text-gray-200 dark:border-gray-800">
+                                            <div class="flex items-center justify-start text-sm">
+                                                <span class="mx-4">
+                                                    Number of Kuridor
+                                                </span>
+                                               
+                                            </div>
+                                            <span width="20" height="20" fill="currentColor" class="mx-4 text-green-600 font-bold dark:text-gray-300" viewBox="0 0 1024 1024">
+                                                {{ $kuridorcount }}
                                             </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
-                                        <p>
-                                            Royal tees
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            434
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                12%
+                                        </li>
+                                        <li class="flex items-center justify-between py-3 text-gray-600 border-b-2 border-gray-100 dark:text-gray-200 dark:border-gray-800">
+                                            <div class="flex items-center justify-start text-sm">
+                                                <span class="mx-4">
+                                                    Total Events Created
+                                                </span>
+                                                
+                                               
+                                            </div>
+                                            <span width="20" height="20" fill="currentColor" class="mx-4 text-green-600 font-bold dark:text-gray-300" viewBox="0 0 1024 1024">
+                                                {{ $eventcount }}
                                             </span>
-                                        </div>
-                                    </div>
+                                        </li>
+                                        <li class="flex items-center justify-between py-3 text-gray-600 border-b-2 border-gray-100 dark:border-gray-800">
+                                            <div class="flex items-center justify-start text-sm">
+                                                <span class="mx-4">
+                                                    Total Number of Bettors
+                                                </span>
+                                              
+                                            </div>
+                                            <span width="20" height="20" fill="currentColor" class="mx-4 text-green-600 font-bold dark:text-gray-300" viewBox="0 0 1024 1024">
+                                                {{ $bettors }}
+                                            </span>
+                                        </li>
+                                      
+                                    </ul>
                                 </div>
                             </div>
+                           
                         </div>
-                        <div class="w-full">
-                            <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
-                                <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max white:text-white">
-                                    New features
-                                </p>
-                                <div class="flex items-end my-6 space-x-2">
-                                    <p class="text-5xl font-bold text-black white:text-white">
-                                        12
+                        <div class="w-full sm:w-1/2 xl:w-1/3">
+                            <div class="mb-4">
+                            <div class="w-full p-4 bg-white shadow-lg rounded-2xl dark:bg-gray-700">
+                                    <p class="font-bold text-black text-md dark:text-white">
+                                        Recently Closed Events
                                     </p>
-                                    <span class="flex items-center text-xl font-bold text-red-500">
-                                        <svg width="20" fill="currentColor" height="20" class="h-3 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                            </path>
-                                        </svg>
-                                        2%
-                                    </span>
+                                    @php $count_closed = count($closed_events); @endphp
+                                    @if($count_closed == 0)
+                                        <p class="text-center">No data available.</p>
+                                    @else
+                                    <ul>
+                                        @foreach($closed_events AS $ce)
+                                        @if($ce->win_flag == 0)
+                                          @php $bg = 'bg-red-200'; @endphp
+                                        @else
+                                        @php $bg = 'bg-white'; @endphp
+                                        @endif
+                                        <a href="{{ route('finishedevents') }}">
+                                        <li class="flex items-center justify-between py-3 text-gray-600 {{ $bg }}">
+                                            <div class="flex flex-col justify-start text-sm">
+                                                <span class="ml-2">
+                                                {{ $ce->event_name }} <br>
+                                                </span>
+                                                <span class="ml-2 text-xs text-gray-400 dark:text-gray-300">
+                                                    @if($ce->win_flag == 1)
+                                                     No. of Winners: {{ $ce->no_of_winners }}<br>
+                                                    @else
+                                                     <span class='text-red-700'>This event needs to be finalized.</span><br>
+                                                    @endif
+                                                    Close Date: {{ date('M d H:i:s', strtotime($ce->date_end)) }}
+                                                 </span>
+                                              
+                                            </div>
+                                            <span width="20" height="20" fill="currentColor" class="mx-4 text-green-600 font-bold dark:text-gray-300" viewBox="0 0 1024 1024">
+                                            P{{ number_format($ce->running_balance,2) }}
+                                            </span>
+                                        </li>
+                                        </a>
+                                        
+                                        @endforeach
+                                    </ul>
+                                    @endif
                                 </div>
-                                <div class="white:text-white">
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Down
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            34
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                22%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Up
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            13
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                12%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
-                                        <p>
-                                            No developed
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            45
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                41%
-                                            </span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="w-full">
-                            <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
-                                <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max white:text-white">
-                                    Sign in
-                                </p>
-                                <div class="flex items-end my-6 space-x-2">
-                                    <p class="text-5xl font-bold text-black white:text-white">
-                                        16
-                                    </p>
-                                    <span class="flex items-center text-xl font-bold text-red-500">
-                                        <svg width="20" fill="currentColor" height="20" class="h-3 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                            </path>
-                                        </svg>
-                                        14%
-                                    </span>
-                                </div>
-                                <div class="white:text-white">
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Amercia
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            43
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                12%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Europe
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            133
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                19%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
-                                        <p>
-                                            Asia
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            23
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                4%
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-full">
-                            <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
-                                <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max white:text-white">
-                                    Sales
-                                </p>
-                                <div class="flex items-end my-6 space-x-2">
-                                    <p class="text-5xl font-bold text-black white:text-white">
-                                        9
-                                    </p>
-                                    <span class="flex items-center text-xl font-bold text-green-500">
-                                        <svg width="20" fill="currentColor" height="20" class="h-3" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                            </path>
-                                        </svg>
-                                        34%
-                                    </span>
-                                </div>
-                                <div class="white:text-white">
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Templates
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            345
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                12%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Components
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            139
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                10%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
-                                        <p>
-                                            Icons
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            421
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                4%
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-full">
-                            <div class="relative w-full px-4 py-6 bg-white shadow-lg white:bg-gray-700">
-                                <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max white:text-white">
-                                    Maintenance
-                                </p>
-                                <div class="flex items-end my-6 space-x-2">
-                                    <p class="text-5xl font-bold text-black white:text-white">
-                                        15
-                                    </p>
-                                    <span class="flex items-center text-xl font-bold text-green-500">
-                                        <svg width="20" fill="currentColor" height="20" class="h-3" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                            </path>
-                                        </svg>
-                                        34%
-                                    </span>
-                                </div>
-                                <div class="white:text-white">
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Cloud
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            123
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-red-500 transform rotate-180" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                22%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
-                                        <p>
-                                            Infra
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            134
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                9%
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between space-x-12 text-sm md:space-x-24">
-                                        <p>
-                                            Office
-                                        </p>
-                                        <div class="flex items-end text-xs">
-                                            23
-                                            <span class="flex items-center">
-                                                <svg width="20" fill="currentColor" height="20" class="h-3 text-green-500" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1675 971q0 51-37 90l-75 75q-38 38-91 38-54 0-90-38l-294-293v704q0 52-37.5 84.5t-90.5 32.5h-128q-53 0-90.5-32.5t-37.5-84.5v-704l-294 293q-36 38-90 38t-90-38l-75-75q-38-38-38-90 0-53 38-91l651-651q35-37 90-37 54 0 91 37l651 651q37 39 37 91z">
-                                                    </path>
-                                                </svg>
-                                                41%
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

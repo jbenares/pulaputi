@@ -1,0 +1,15 @@
+{
+  "background_color": "#3fc2fa",
+  "description": "PhakBet (BETA)",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "icon/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "PhakBet (BETA)",
+  "short_name": "PhakBet",
+  "start_url": "https://phakbet.com"
+}

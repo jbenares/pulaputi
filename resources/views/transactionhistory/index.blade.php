@@ -1,7 +1,11 @@
 <x-app-layout>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
     <main class="relative h-screen overflow-hidden bg-gray-100 white:bg-gray-800">
     <x-sidebar />
+
     <x-header />
+ <link rel="stylesheet" href="{{ URL::asset('css/jquery.dataTables.min.css') }}">
 <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
     <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
                 <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
@@ -21,195 +25,104 @@
                  
 
                    
-                </div> -->
+                </div> --><br>
+                <div class="flex items-center" style="width:40%">
+                    <button type="button" class="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                        
+                        Current Wallet
+                    </button>
+                    <button type="button" class="w-full px-4 py-2 text-base font-medium text-black bg-white border rounded-r-md hover:bg-gray-100">
+                        <strong>P{{ number_format($curr_wallet,2) }} </strong>
+                    </button>
+                </div>
               
     <div class="py-8">
         <div class="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
             <div class="inline-block min-w-full overflow-hidden rounded-lg shadow">
-                <table class="min-w-full leading-normal">
+                <table class="min-w-full leading-normal" id="table_overall">
                     <thead>
                         <tr>
-                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 bg-white border-b border-gray-200">
                                 Transaction Date
                             </th>
-                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 bg-white border-b border-gray-200">
                                 Transaction Type
                             </th>
-                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                            @if($usertype=='Admin')
+                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 bg-white border-b border-gray-200">
+                                Cashin Method
+                            </th>
+                            @endif
+                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 bg-white border-b border-gray-200">
                                 Debit
                             </th>
-                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 bg-white border-b border-gray-200">
                                 Credit
+                            </th>
+                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 bg-white border-b border-gray-200">
+                                
                             </th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($getwallet AS $wallet)
                         <tr>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                 <div class="flex items-center">
                                    
                                     <div class="ml-3">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            Jan. 12, 2023
+                                            {{ date("Y-m-d",strtotime($wallet->transaction_date)) }}
                                         </p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    Cash-in
+                                    @if(str_contains($wallet->transaction_type, 'Registration'))
+                                     @php
+                                        $reg = explode('#',$wallet->transaction_type);
+                                        $name = getUserDetailsCustom("ref_code", $reg[1], 'name');
+                                        $mobile = getUserDetailsCustom("ref_code", $reg[1], 'mobile');
+                                     @endphp
+                                     {{ $reg[0] . " " .  $name . "/" . $mobile}}
+                                    @else 
+                                    {{ $wallet->transaction_type . " ". (!empty($wallet->event_id) ? "- ".  getEventdetails($wallet->event_id,'event_name') :"") }}
+                                    @endif
+                                </p>
+                            </td>
+                            @if($usertype=='Admin')
+                            <th scope="col" class="px-5 py-3 text-sm font-normal text-left text-gray-800 uppercase bg-white border-b border-gray-200">
+                                {{ $wallet->cashin_method }}
+                            </th>
+                            @endif
+                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                   {{ number_format($wallet->debit,2)}}
                                 </p>
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                   10,000.00
+                                {{ number_format($wallet->credit,2)}}
                                 </p>
+                              
                             </td>
                             <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                   0
-                                </p>
-                                <!-- <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
+                                <a href="{{ route('transactionreceipt',$wallet->id) }}">
+                                  <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
                                     <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
                                     </span>
-                                    <span class="relative">
-                                        0
+                                    <span class="relative text-xs">
+                                        View Receipt
                                     </span>
-                                </span> -->
+                                </span> 
+                                </a>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <div class="flex items-center">
-                                   
-                                    <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Jan. 12, 2023
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    Cash-in
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                   10,000.00
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                   0
-                                </p>
-                                <!-- <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                    </span>
-                                    <span class="relative">
-                                        0
-                                    </span>
-                                </span> -->
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <div class="flex items-center">
-                                   
-                                    <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Jan. 12, 2023
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    Cash-in
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                   10,000.00
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                   0
-                                </p>
-                                <!-- <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                    </span>
-                                    <span class="relative">
-                                        0
-                                    </span>
-                                </span> -->
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <div class="flex items-center">
-                                   
-                                    <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            Jan. 12, 2023
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    Cash-in
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                   10,000.00
-                                </p>
-                            </td>
-                            <td class="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                   0
-                                </p>
-                                <!-- <span class="relative inline-block px-3 py-1 font-semibold leading-tight text-green-900">
-                                    <span aria-hidden="true" class="absolute inset-0 bg-green-200 rounded-full opacity-50">
-                                    </span>
-                                    <span class="relative">
-                                        0
-                                    </span>
-                                </span> -->
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
-                <div class="flex flex-col items-center px-5 py-5 bg-white xs:flex-row xs:justify-between">
-                    <div class="flex items-center">
-                        <button type="button" class="w-full p-4 text-base text-gray-600 bg-white border rounded-l-xl hover:bg-gray-100">
-                            <svg width="9" fill="currentColor" height="8" class="" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z">
-                                </path>
-                            </svg>
-                        </button>
-                        <button type="button" class="w-full px-4 py-2 text-base text-indigo-500 bg-white border-t border-b hover:bg-gray-100 ">
-                            1
-                        </button>
-                        <button type="button" class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100">
-                            2
-                        </button>
-                        <button type="button" class="w-full px-4 py-2 text-base text-gray-600 bg-white border-t border-b hover:bg-gray-100">
-                            3
-                        </button>
-                        <button type="button" class="w-full px-4 py-2 text-base text-gray-600 bg-white border hover:bg-gray-100">
-                            4
-                        </button>
-                        <button type="button" class="w-full p-4 text-base text-gray-600 bg-white border-t border-b border-r rounded-r-xl hover:bg-gray-100">
-                            <svg width="9" fill="currentColor" height="8" class="" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+              
             </div>
         </div>
     
@@ -219,6 +132,26 @@
 </div>
 
 
-   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#table_overall').DataTable({
+            order: [[0, 'desc']],
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    } );
+</script>
     </main>
 </x-app-layout>

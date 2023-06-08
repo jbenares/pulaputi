@@ -9,6 +9,7 @@ class RegisterMayor extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'date_registered',
         'name',
         'email',
         'password',

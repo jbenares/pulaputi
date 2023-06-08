@@ -25,6 +25,7 @@ class Events extends Model
         'win_array',
         'running_balance',
         'win_flag',
+        'closed'
     ];
         protected $table = 'events';
 }

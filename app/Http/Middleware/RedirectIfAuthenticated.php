@@ -23,7 +23,19 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $usertype = auth()->user()->usertype;
+
+                if($usertype=="King"){
+                    return redirect(RouteServiceProvider::HOME);
+                } else if($usertype=="Mayor" || $usertype == "Coridor"){
+                    return redirect(RouteServiceProvider::HOME_MAYOR);
+                } else if($usertype=="Phakbet"){
+                    return redirect(RouteServiceProvider::HOME_PHAKBET);
+                } else if($usertype=="Liaison"){
+                    return redirect(RouteServiceProvider::HOME_LIAISON);
+                } else if($usertype=="Admin"){
+                    return redirect(RouteServiceProvider::HOME_ADMIN);
+                }
             }
         }
 

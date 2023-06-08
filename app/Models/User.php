@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'date_registered',
         'name',
         'email',
         'password',
@@ -33,7 +34,8 @@ class User extends Authenticatable
         'ref_code',
         'region_code',
         'region',
-        'city'
+        'city',
+        'first_time_logged_in'
         
     ];
 

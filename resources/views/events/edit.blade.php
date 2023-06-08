@@ -1,5 +1,15 @@
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+
 <x-app-layout>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/6sc52bbq35j9wax8aqztkfgeuza7n5nzzxxjiyss5fmrherg/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+      selector: '#event_desc',
+      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+     
+    });
+  </script>
     <main class="relative h-screen overflow-hidden bg-gray-100 white:bg-gray-800">
     <x-sidebar />
     <x-header />
@@ -59,6 +69,17 @@
         <form action="{{ route('events.update', $event->id) }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            @if($done==1)
+            <div class="flex items-center">
+                <button type="button" class="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                    
+                    TOTAL PROFIT
+                </button>
+                <button type="button" class="w-full px-4 py-2 text-base font-medium text-black bg-white border rounded-r-md hover:bg-gray-100">
+                    <strong>  {{ number_format(getProfit($event->id),2) }} </strong>
+                </button>
+            </div><br>
+            @endif
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
                        
@@ -76,13 +97,14 @@
 
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
+                    <!-- <img src="{{ URL::asset('images/game_category/'. $event->event_image) }}" width="300px">  -->
                     @if($done==0)
                         <input type="file" id="event_image" name="event_image" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                     @endif    
-                        <img src="{{ URL::asset('images/'. $event->event_image) }}" width="300px"> <br>
-                        @if($done==0)
+                        <img src="{{ URL::asset('images/game_category/'. $event->event_image) }}" width="300px"> <br>
+                        <!-- @if($done==0)
                         <input type='checkbox' name='remove_photo' value='1'><span style='color:red; font-size:12px'> Remove Photo</span>
-                        @endif   
+                        @endif    -->
                     </div>
                     </div>
                     
@@ -91,28 +113,28 @@
 
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="start_date"  name="start_date"  value="{{ $event->date_start }}" placeholder="Start Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="start_date"  name="start_date"  value="{{ $event->date_start }}" placeholder="Start Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent bg-white-200 flex-1 appearance-none border border-white-300 w-full py-2 px-4 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
 
              <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="end_date" name="end_date"  value="{{ $event->date_end }}"  placeholder="End Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="end_date" name="end_date" value="{{ $event->date_end }}"  placeholder="End Date" onfocus="(this.type='datetime-local')" class=" rounded-lg border-transparent flex-1 appearance-none border border-white-300 w-full py-2 px-4 bg-white-200 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
             
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="initial_pot" name="initial_pot" value="{{$event->initial_pot}}" placeholder="Initial Pot" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="initial_pot" name="initial_pot" disabled value="{{$event->initial_pot}}" placeholder="Initial Pot" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-gray-200 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('initial_pot')" class="mt-2" />
             
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="slot_price" name="slot_price" value="{{$event->slot_price}}" placeholder="Slot Price" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <input type="text" id="slot_price" name="slot_price" disabled value="{{$event->slot_price}}" placeholder="Slot Price" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-gray-200 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         </div>
                     </div>
                     <x-input-error :messages="$errors->get('slot_price')" class="mt-2" />
@@ -120,14 +142,14 @@
             <div class="flex flex-col mb-2">
                     <div class=" relative ">
                     @if($done==0)
-                        <select type="text" id="game_category" name="game_category" onchange="check_gamecat(this.value)" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                        <select type="text" id="game_category" name="game_category" disabled onchange="check_gamecat(this.value)" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-gray-200 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                             <option value="">Game Category</option>
                             @foreach($game_category AS $gc)
                                 <option value="{{ $gc->id.'_'.$gc->no_of_outcomes.'_'.$gc->choice_array }}" {{ $gc->id == $event->game_category_id ? 'selected' : '' }}>{{ $gc->category_name }}</option>
                             @endforeach
                         </select>   
                     @else
-                        <input type='text' value="{{getGameCatDetails($event->game_category_id, 'category_name') }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" >
+                        <input type='text' disabled value="{{getGameCatDetails($event->game_category_id, 'category_name') }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-gray-200 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" >
                     @endif 
                     </div>
                     </div>
@@ -142,7 +164,7 @@
 
                        @for($y=0;$y<$outcome;$y++)
                        @php $field = "choice_array_". $y; @endphp
-                       <input type="hidden" name="{{ $field }}" id = "{{ $field }}" value="{{ $choices[$y] }}" />
+                       <input type="hidden" name="{{ $field }}" id = "{{ $field }}" value="{{ $choices[$y] }}" class="bg-gray-200" />
                        @endfor
                         
                     @endif
@@ -154,16 +176,33 @@
                        @php $field = "choice_array_". $x; @endphp
                             <div class="flex flex-col mb-2 added">
                                 <div class=" relative ">
-                                <input type="text" id="{{ $field }}" name="{{ $field }}" value="{{ $choices[$x] }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                                <input type="text" id="{{ $field }}" disabled name="{{ $field }}" value="{{ $choices[$x] }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-gray-200 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                             </div>
                             </div>
                        
                         @endfor
                         
                     @endif
-                    <div id="outcomelist" class="alt1" style="padding:10px;">
-                        
+                    @if($done == 1)
+                    <div class="alt1" style="padding:10px;">
+                    <p style="padding-top:10px;" class="text-sm text-blue-700">Total Pot</p>
+                     <input type="text"  disabled value="{{ number_format($event->running_balance,2)}}"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                     <p style="padding-top:10px;"  class="text-sm text-blue-700">Winning Array</p>
+                     <input type="text"  disabled value="{{$event->win_array}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                     <p style="padding-top:10px;" class="text-sm text-blue-700">No. of Winners</p>
+                     <input type="text"  disabled value="{{$event->no_of_winners}}"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                     <p style="padding-top:10px;" class="text-sm text-blue-700">Slots Taken</p>
+                     <input type="text" disabled value="{{ getTotalSlots($event->id) }}"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
+                     @if(!empty($event->result_image))
+                        <p style="padding-top:10px;" class="text-sm text-blue-700">Image Result</p>
+                        <img src="{{ URL::asset('images/results/'. $event->result_image) }}" width="300px"> 
+                    @endif
+                     <p style="padding-top:10px;" class="text-sm text-blue-700">URL Result</p>
+                     <input type="text" disabled value="{{ $event->url_result }}"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                     </div>
+                  
+                    </div>
+                    @endif
                     <input type="hidden" id="game_category_id" value="{{ $event->game_category_id }}">
 
                         @if($done == 0)

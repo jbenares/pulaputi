@@ -23,9 +23,9 @@
                
                     <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
                         @if($usertype=='King')
-                            Create a New Mayor/Coridor Account
+                            Create a New Mayor/Kuridor Account
                         @elseif($usertype=='Mayor')
-                            Create a New Coridor Account
+                            Create a New Kuridor Account
                         @endif
                     </h1>
                 
@@ -38,9 +38,9 @@
               
                     <a href="{{ route('registermayor.index') }}" class="flex items-center px-4 py-2 text-blue-600 border border-blue-600  rounded-r-full rounded-tl-sm rounded-bl-full text-md ">
                         @if($usertype=='King')
-                            Mayor/Coridor List
+                            Mayor/Kuridor List
                         @elseif($usertype=='Mayor') 
-                            Coridor List
+                        Kuridor List
                         @endif
                         
                     </a>
@@ -56,6 +56,7 @@
 
     <div class="container max-w-3xl px-4 mx-auto sm:px-8">
   
+    <div class="p-6 mt-8">
     @if (session('status'))
                 <br>
                     <div class="flex flex-wrap items-center gap-4">
@@ -64,8 +65,7 @@
                         </span>
                     </div>
                 @endif
-   
-    <div class="p-6 mt-8">
+                <br>
         <form action="{{ route('store_mayor') }}" method="POST">
         @csrf
         @if($usertype=='King')
@@ -74,7 +74,7 @@
                     <select name="usertype" required id="usertype"  class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                         <option value="">User Type</option>
                         <option value="Mayor">Mayor</option>
-                        <option value="Coridor">Coridor</option>
+                        <option value="Coridor">Kuridor</option>
                     </select>
                     </div>
                 </div>
@@ -89,6 +89,7 @@
                     <div class=" relative ">
                         <input type="text" id="name" name="name" value="{{old('name')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Full Name"/>
                         </div>
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
@@ -105,15 +106,21 @@
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="gcash" name="gcash" value="{{old('gcash')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Gcash"/>
+                        <input type="text" id="gcash" name="gcash" value="{{old('gcash')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Gcash (optional)"/>
                         </div>
                         <x-input-error :messages="$errors->get('gcash')" class="mt-2" />
                     </div>
                     <div class="flex flex-col mb-2">
                     <div class=" relative ">
-                        <input type="text" id="maya" name="maya" value="{{old('maya')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Maya"/>
+                        <input type="text" id="maya" name="maya" value="{{old('maya')}}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Maya (optional)"/>
                         </div>
                         <x-input-error :messages="$errors->get('maya')" class="mt-2" />
+                    </div>
+                    <div class="flex flex-col mb-2">
+                    <div class=" relative ">
+                        <input type="text" id="wallet" name="wallet" value="{{old('wallet')}}" onkeypress="return onlyNumberKey(event)" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Add Wallet"/>
+                        </div>
+                        <x-input-error :messages="$errors->get('wallet')" class="mt-2" />
                     </div>
                  
                     <div class="flex w-full my-4">
@@ -127,7 +134,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script>
             $(document).ready(function() {
                 $('input').attr('autocomplete','off');
@@ -151,7 +158,7 @@
                        {
                          if(data){
                             $('#mayor').empty();
-                            $('#mayor').append('<option hidden>Choose Mayor</option>'); 
+                            $('#mayor').append('<option value="0">Choose Mayor</option>'); 
                             $.each(data, function(key, mayor){
                                 $('select[name="mayor"]' ).append('<option value="'+ mayor.id +'">' + mayor.name+ '</option>');
                             });
