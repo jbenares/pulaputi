@@ -74,14 +74,28 @@
                         <select type="text" id="game_category" name="game_category" onchange="resetDD()" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />
                             <option value="">Game Category</option>
                             @foreach($game_category AS $gc)
-                                <option value="{{ $gc->id.'_'.$gc->no_of_outcomes.'_'.$gc->choice_array }}">{{ $gc->category_name }}</option>
+                                <option value="{{ $gc->id.'_'.$gc->no_of_outcomes.'_'.$gc->choice_array.'_'.$gc->option_type }}">{{ $gc->category_name }}</option>
                             @endforeach
                         </select>    
                     </div>
                     </div>
                     <x-input-error :messages="$errors->get('game_category')" class="mt-2"  />
+                <div id="rangeRaffle" class="flex flex-col mb-2" style="display:none">
+                <div class="flex flex-col mb-2">
+                            <div class=" relative ">
+                        <input type="number" id="raffle_from" name="raffle_from" value="" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Range From"/>
+                        </div>
+                        </div>
+                   
+                        <div class="flex flex-col mb-2">
+                            <div class=" relative ">
+                        <input type="number" id="raffle_to" name="raffle_to" value="" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Range To"/>
+                        </div>
+                        </div>
                     
-            <div id="questionTypeDD" class="flex flex-col mb-2" style="display:none">
+                </div> 
+            
+                <div id="questionTypeDD" class="flex flex-col mb-2" style="display:none">
                 <select name="questionType" id="questionType" onchange="check_gamecat(this.value)" class='form-control rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent'></select>
             </div>
                     <div id="outcomelist" class="alt1" >
@@ -192,18 +206,25 @@
                 
                 $('#game_category').on('change', function() {
                 var x = document.getElementById("questionTypeDD");
+                var raf = document.getElementById("rangeRaffle");
              
                 var gc = $(this).val();
                 var gamecat = gc.split("_");
 
                     var choices = gamecat[2];
-                    if(choices==""){
+                    var optiontype = gamecat[3];
+                  
+                    if(choices=="" && optiontype==1){
                         x.style.display = "block";
+                        raf.style.display = "none";
                         $('#questionType').empty();
                         $('#questionType').append('<option value="0">Choose Question Type</option>'); 
                         $('select[name="questionType"][id="questionType"]' ).append('<option value="0">Pre-existing Questions</option>');
                         $('select[name="questionType"][id="questionType"]' ).append('<option value="1">Custom Questions</option>');
-                    } else {
+                    } else if(choices!="") {
+                        x.style.display = "none";
+                    } else if(choices=="" && optiontype==2) {
+                        raf.style.display = "block";
                         x.style.display = "none";
                     }
                 
