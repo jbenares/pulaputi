@@ -32,6 +32,8 @@
                 <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-2 lg:grid-cols-3">
                     @php $count=1; @endphp
                 @foreach($events AS $ev)
+                    @php $givenchoices = checkRaffle($ev->game_category_id); @endphp
+                
                     @if($ev->win_flag == 0)
                      @php $bg = 'bg-white';  @endphp
                     @else 
@@ -137,7 +139,7 @@
                                     </p>
                                     <form class="space-y-6" action="{{ route('set_winning_array', ['count'=>$count]) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    @if(!empty($ev->choice_array))
+                                    @if(!empty($ev->choice_array) && $givenchoices==0) {{ 'hi' }}
                                         @php $choices = explode(", " , getChoiceArray($ev->id)); 
                                             $count_choices = count($choices);    
                                        
@@ -148,17 +150,33 @@
                                         @endfor
                                         
                                         <input type="hidden" name="choice_count_{{ $count }}" id="choice_count_{{ $count }}" value="{{ $count_choices }}">
-                                    @else
+                                    @elseif(empty($ev->choice_array) && $givenchoices==0) 
                                     @php $choices = explode("-" , getChoiceArray($ev->id));
                                             $min = $choices[0];
                                             $max = $choices[1];
                                             $outcomes = getGameCatDetails($ev->game_category_id, 'no_of_outcomes'); 
+                                          
                                     @endphp
                                             @for($y=1;$y<=$outcomes;$y++)
                                                 <input type="text" id="choice_{{ $count }}_{{ $y }}" name="choice_{{ $count }}_{{ $y }}"  placeholder="{{ getChoiceArray($ev->id) }}" required class=" rounded-lg flex-1 appearance-none border border-gray-300 py-2 px-4 bg-gray-50  text-gray-900 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent w-full" />
                                                
                                             @endfor
                                             <input type="hidden" name="choice_count_{{ $count }}" id="choice_count_{{ $count }}" value="{{ $outcomes }}">
+                                   
+                                    @else    
+                                    @php $choices = explode("," , $ev->choice_array);
+                                    
+                                            $min = $choices[0];
+                                            $max = $choices[1]; 
+                                            $outcomes = getGameCatDetails($ev->game_category_id, 'no_of_outcomes'); 
+                                        @endphp
+                                            @for($y=1;$y<=$outcomes;$y++)
+                                                <input type="text" id="choice_{{ $count }}_{{ $y }}" name="choice_{{ $count }}_{{ $y }}"  placeholder="{{ getChoiceArray($ev->id) }}" required class=" rounded-lg flex-1 appearance-none border border-gray-300 py-2 px-4 bg-gray-50  text-gray-900 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent w-full" />
+                                               
+                                            @endfor
+                                            <input type="hidden" name="choice_count_{{ $count }}" id="choice_count_{{ $count }}" value="{{ $outcomes }}">
+                                        @endphp
+
                                     @endif
 
                                     <input type="file" id="result_image_{{ $count }}" name="result_image_{{ $count }}" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" />

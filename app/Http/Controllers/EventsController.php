@@ -12,6 +12,7 @@ use App\Models\WalletCoridor;
 use App\Models\WalletMayor;
 use App\Models\GameCategory;
 use App\Models\SmsOut;
+use App\Models\RaffleCombination;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -43,7 +44,9 @@ class EventsController extends Controller
     public function finishedevents()
     {
         $today = date("Y-m-d H:i:s");
+        
         $events = Events::where('king_id',auth()->user()->id)
+                        ->where('date_start','>','2023-06-01 07:00:00')
                         ->where('date_end', '<', $today)
                         ->orderBy('win_flag','asc')
                         ->orderBy('date_end','desc')
@@ -111,6 +114,7 @@ class EventsController extends Controller
         $get_choice_no = GameCategory::where('id',$request->input('game_category'))->get();
         $firsttime = $get_choice_no[0]['firsttime'];
         $choice_array = $get_choice_no[0]['choice_array'];
+        $given_choices = $get_choice_no[0]['given_choices'];
         $outcomes=0;
 
        
@@ -119,16 +123,18 @@ class EventsController extends Controller
         }
         $choices = "";
     
-            if($outcomes >0){
+            if($outcomes >0 && $given_choices == 0){
                 for($x=1;$x<=$outcomes;$x++){
                   
                     $choices .= $request->input('choice_array_'.$x) .", ";
                     
                 }
+            } else if($outcomes >0 && $given_choices != 0){
+                $choices .= $request->input('raffle_from') .", " . $request->input('raffle_to') .", ";
             }
         $choices = substr($choices,0,-2);
       
-        //echo $choices;
+       
         $game_cat = explode("_", $request->input('game_category'));
         $game_cat_id = $game_cat[0];
         
@@ -154,7 +160,42 @@ class EventsController extends Controller
             'choice_array'=>$choices,
             'firsttime'=>$firsttime
         ]);
+        if($outcomes >0 && $given_choices != 0){
+            $arr=[];
+            for($a = $request->input('raffle_from'); $a<=$request->input('raffle_to'); $a++){
+                $arr[] = $a;
+            }
+        
+        $collection = collect($arr);
+        if($outcomes == 2){
+                $matrix = $collection->crossJoin($arr);
+                $matrix->all();
+                //$matrix->dd();
+            
+            foreach($matrix AS $key=>$value){
+                $combi= $value[0] . " - " .$value[1];
 
+                RaffleCombination::create([
+                    'event_id'=>$eventid,
+                    'combination'=>$combi,
+                ]);
+                
+            
+            }
+            } else if($outcomes == 3){
+                $matrix = $collection->crossJoin($arr, $arr);
+                $matrix->all();
+                //$matrix->dd();
+                
+                foreach($matrix AS $key=>$value){
+                    $combi = $value[0] . " - " .$value[1] . " - " .$value[2];
+                    RaffleCombination::create([
+                        'event_id'=>$eventid,
+                        'combination'=>$combi,
+                    ]);
+                }
+            }
+        }
        
         if($potmoney==0){
             $userupdate = User::find($userid);
@@ -513,5 +554,25 @@ class EventsController extends Controller
                         ->get();
 
         return view('events.viewbettors', compact('bets','id'));
+    }
+
+    public function raffle_reservation($eventid)
+    {
+        $userid=auth()->user()->id;
+        $events = Events::where('id',$eventid)->get();
+        $choice_array = $events[0]['choice_array'];
+        $choices = explode(",", $choice_array);
+        $max_choice = $choices[1];
+        $tens = floor($max_choice/10);
+        echo $tens;
+        if($tens == 0){
+            $tabs =1;
+        } else {
+            $tabs = $tens;
+        }
+
+       
+        return view('events.raffle_reservation', compact('tabs', 'eventid'));
+        
     }
 }

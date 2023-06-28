@@ -51,6 +51,7 @@ return array(
     'App\\Models\\LoginLogs' => $baseDir . '/app/Models/LoginLogs.php',
     'App\\Models\\PercentageDivision' => $baseDir . '/app/Models/PercentageDivision.php',
     'App\\Models\\QuestionBank' => $baseDir . '/app/Models/QuestionBank.php',
+    'App\\Models\\RaffleCombination' => $baseDir . '/app/Models/RaffleCombination.php',
     'App\\Models\\RegisterMayor' => $baseDir . '/app/Models/RegisterMayor.php',
     'App\\Models\\SmsOut' => $baseDir . '/app/Models/SmsOut.php',
     'App\\Models\\TransactionHistory' => $baseDir . '/app/Models/TransactionHistory.php',

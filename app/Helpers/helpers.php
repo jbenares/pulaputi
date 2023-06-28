@@ -10,6 +10,7 @@ use App\Models\EventNoWins;
 use App\Models\EventWinners;
 use App\Models\Bets;
 use App\Models\QuestionBank;
+use App\Models\RaffleCombination;
 
 if (!function_exists('timeRemaining')) {
   function timeRemaining($dateto) {
@@ -91,10 +92,14 @@ if (!function_exists('getChoiceArray')) {
   {
       $choices = Events::where("id", $eventid)->get();
       //echo $choices;
-      if(!empty($choices[0]['choice_array'])){
+      $ch = GameCategory::where("id",$choices[0]['game_category_id'])->get();
+      $given_choices= $ch[0]['given_choices'];
+
+      if(!empty($choices[0]['choice_array']) && $given_choices == 0){
+       
         $choice_array = $choices[0]['choice_array'];
-      } else {
-        //$choice_array="";
+      }  else {
+        
          $gamecat = $choices[0]['game_category_id'];
          $outcomes = GameCategory::where("id", $gamecat)->get();
 
@@ -538,6 +543,96 @@ if (!function_exists('getOperator')) {
      $getuser = User::where("usertype","Operator")->get();
      $output =$getuser[0]['id'];
      return $output;
+   
+  }
+}
+
+if (!function_exists('getCombinations')) {
+  function getCombinations($eventid, $startdigit) {
+
+    $between = explode("-",getBetween($startdigit));
+    $morethan = $between[0];
+    $lessthan = $between[1];
+    $series = array();
+     $getcombi = RaffleCombination::where("event_id",$eventid)->get();
+     foreach($getcombi AS $com){
+        $combi = explode("-",$com->combination);
+        $firstchar = $combi[0];
+
+        if($firstchar>$morethan && $firstchar <= $lessthan){
+        
+          $series[] = $com->combination;
+        }
+
+     }
+     return $series;
+   
+  }
+}
+
+if (!function_exists('checkRaffleAvail')) {
+  function checkRaffleAvail($combi) {
+    $check = RaffleCombination::where("combination",$combi)->get();
+    $reserved =$check[0]['reserved'];
+    return $reserved;
+  }
+}
+
+if (!function_exists('checkRaffle')) {
+  function checkRaffle($gamecat) {
+    $ch = GameCategory::where("id",$gamecat)->get();
+    $given_choices= $ch[0]['given_choices'];
+    return $given_choices;
+  }
+}
+
+
+
+if (!function_exists('getBetween')) {
+  function getBetween($startdigit) {
+
+    if($startdigit == 0) {
+      $morethan = 0;
+      $lessthan = 10;
+    } 
+    if($startdigit == 1) {
+      $morethan = 10;
+      $lessthan = 20;
+    } 
+    if($startdigit == 2) {
+      $morethan = 20;
+      $lessthan = 30;
+    } 
+    if($startdigit == 3) {
+      $morethan = 30;
+      $lessthan = 40;
+    } 
+    if($startdigit == 4) {
+      $morethan = 40;
+      $lessthan = 50;
+    } 
+    if($startdigit == 5) {
+      $morethan = 50;
+      $lessthan = 60;
+    } 
+    if($startdigit == 6) {
+      $morethan = 60;
+      $lessthan = 70;
+    } 
+    if($startdigit == 7) {
+      $morethan = 70;
+      $lessthan = 80;
+    } 
+    if($startdigit == 8) {
+      $morethan = 80;
+      $lessthan = 90;
+    }  if($startdigit == 9) {
+      $morethan = 90;
+      $lessthan = 100;
+    } 
+    
+    return $morethan."-".$lessthan;
+   
    
   }
 }

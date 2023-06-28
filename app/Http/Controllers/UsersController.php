@@ -17,7 +17,10 @@ use App\Models\WalletMisc;
 use App\Models\PercentageDivision;
 use App\Models\LoginLogs;
 use App\Models\SmsOut;
+use App\Models\RaffleCombination;
+use Session;
 use Illuminate\Http\Request;
+
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -375,6 +378,7 @@ class UsersController extends Controller
                     $win_order=1;
             }
             //echo $request->input('slotprice_'.$count);
+           
             $total = $request->input('slotprice_'.$count) * $request->input('bet_'.$count);
 
             $maxedout = checkMaxSlotsTaken($choice, $win_order, $event_id);
@@ -580,6 +584,263 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
+
+     public function place_bet_raffle(Request $request)
+    {
+        
+            $choice_pick= $request->input('choice');
+            $event_id= $request->input('event_id');
+            if(empty($choice_pick)){
+                return back()->with('status','Choose number combination first. Click on the number combination you want to bet on.');
+            } else {
+                
+
+           
+            $getid = RaffleCombination::where("combination", $choice_pick)->where('event_id', $event_id)->get();
+            $combi_id = $getid[0]['id'];
+
+            $updateCombi = RaffleCombination::find($combi_id);
+            $updateCombi->reserved = 1;
+            $updateCombi->save();
+
+            $userid = auth()->user()->id;
+        $now=date("Y-m-d H:i:s");
+        $perc = PercentageDivision::orderBy('date_set','DESC')->limit(1)->get();
+        $tax= $perc[0]['tax'];
+        $king= $perc[0]['king'];
+        $mayor= $perc[0]['mayor'];
+        $coridor= $perc[0]['coridor'];
+        $liaison= $perc[0]['liaison'];
+        $misc= $perc[0]['misc'];
+        $pot= $perc[0]['pot'];
+        $webapp= $perc[0]['webapp'];
+        $payment_ref = date("YmdHis").generateRandom('6');
+        $closed = checkEventStatus($event_id);
+        if($closed == 0 ){
+                $coridor_id= getUpline('coridor', $userid, 'id');
+                $mayor_id= getUpline('mayor', $userid, 'id');
+                $king_id = getEventdetails($event_id, 'king_id');
+                $liaison_id = getLiaison($king_id);
+                $operator_id = getOperator();
+             
+          
+            $c = explode("-",$choice_pick);
+            $choice="";
+            $choice_count= count($c);
+            // if($choice_count == 1){
+            //     $choice= $request->input('choice_'.$count);
+            // } else {
+                for($x=0;$x<$choice_count;$x++){
+                    $choice .= $c[$x] . ",";
+                }
+
+                $choice = substr($choice, 0, -1);
+            //}
+
+          
+                    $win_order=1;
+            
+            //echo $request->input('slotprice_'.$count);
+            $ev_details= Events::where('id',$event_id)->get();
+
+            $total = $ev_details[0]['slot_price'];
+
+           
+                ///////////////////// INSERT INTO BET TABLE ////////////////////
+                $betid = Bets::insertGetId([
+                    'bet_date'=>$now,
+                    'event_id'=>$event_id,
+                    'user_id'=>auth()->user()->id,
+                    'slot_price'=>$ev_details[0]['slot_price'],
+                    'bet_slots'=>1,
+                    'bet_total'=>$total,
+                    'bet_choice' =>$choice,
+                    'win_order'=>$win_order
+                    ]);
+
+                    ///////////////////// END INSERT INTO BET TABLE ////////////////////
+                
+                /////////////// UPDATE USER CURRENT WALLET AND TRANSACTION TABLE ///////////////
+
+                $wallet = User::find($userid);
+                $new_wallet = $wallet->curr_wallet - $total;
+                $wallet->curr_wallet=$new_wallet;
+                $wallet->save();
+
+                WalletUser::create([
+                    'transaction_date'=>$now,
+                    'user_id'=>auth()->user()->id,
+                    'bet_id'=>$betid,
+                    'event_id'=>$event_id,
+                    'transaction_type'=>"Betting Amount",
+                    'credit' =>$total,
+                    'transaction_reference'=>$payment_ref
+                ]);
+
+                /////////////// END UPDATE USER CURRENT WALLET AND TRANSACTION TABLE///////////////
+
+
+                    /////////////// INSERT TAX WALLET ///////////////
+
+                    $wht =$total*$tax;
+                    WalletTax::create([
+                        'transaction_date'=>$now,
+                        'bet_id'=>$betid,
+                        'transaction_type'=>"Betting Commission",
+                        'debit' =>$wht,
+                        'transaction_reference'=>$payment_ref
+                        ]);
+                    
+                    $new_total = $total - $wht;
+                    /////////////// END INSERT TAX WALLET ///////////////
+
+                    /////////////// INSERT Coridor WALLET ///////////////
+                    $coridor_amount = $new_total * $coridor;
+                    
+                    WalletCoridor::create([
+                        'transaction_date'=>$now,
+                        'coridor_id'=>$coridor_id,
+                        'bet_id'=>$betid,
+                        'event_id'=>$event_id,
+                        'transaction_type'=>"Betting Commission",
+                        'debit' =>$coridor_amount,
+                        'transaction_reference'=>$payment_ref
+                        ]);
+
+                    $wallet_cor = User::find($coridor_id);
+                    $new_wallet_cor = $wallet_cor->curr_wallet + $coridor_amount;
+                    $wallet_cor->curr_wallet=$new_wallet_cor;
+                    $wallet_cor->save();
+
+                    /////////////// END INSERT Coridor WALLET ///////////////
+
+                    /////////////// INSERT MAYOR WALLET ///////////////
+                    $mayor_amount = $new_total * $mayor;
+                    
+                    WalletMayor::create([
+                        'transaction_date'=>$now,
+                        'mayor_id'=>$mayor_id,
+                        'bet_id'=>$betid,
+                        'event_id'=>$event_id,
+                        'transaction_type'=>"Betting Commission",
+                        'debit' =>$mayor_amount,
+                        'transaction_reference'=>$payment_ref
+                        ]);
+            
+                    $wallet_may = User::find($mayor_id);
+                    $new_wallet_may = $wallet_may->curr_wallet + $mayor_amount;
+                    $wallet_may->curr_wallet=$new_wallet_may;
+                    $wallet_may->save();
+            
+                    /////////////// END INSERT MAYOR WALLET ///////////////
+
+
+                    /////////////// INSERT KING WALLET ///////////////
+                    $king_amount = $new_total * $king;
+                    
+                    WalletKing::create([
+                        'transaction_date'=>$now,
+                        'king_id'=>$king_id,
+                        'bet_id'=>$betid,
+                        'event_id'=>$event_id,
+                        'transaction_type'=>"Betting Commission",
+                        'debit' =>$king_amount,
+                        'transaction_reference'=>$payment_ref
+                        ]);
+            
+                    $wallet_king = User::find($king_id);
+                    $new_wallet_king = $wallet_king->curr_wallet + $king_amount;
+                    $wallet_king->curr_wallet=$new_wallet_king;
+                    $wallet_king->save();
+            
+                    /////////////// END INSERT KING WALLET ///////////////
+
+                    /////////////// INSERT POT WALLET ///////////////
+                    $pot_amount = $new_total * $pot;
+                    
+                    WalletPot::create([
+                        'transaction_date'=>$now,
+                        'bet_id'=>$betid,
+                        'event_id'=>$event_id,
+                        'transaction_type'=>"Betting Commission",
+                        'debit' =>$pot_amount,
+                        'transaction_reference'=>$payment_ref
+                        ]);
+            
+                    $wallet_pot = Events::find($event_id);
+                    $new_wallet_pot = $wallet_pot->running_balance + $pot_amount;
+                    $wallet_pot->running_balance=$new_wallet_pot;
+                    $wallet_pot->save();
+            
+                    /////////////// END INSERT POT WALLET ///////////////
+
+                    /////////////// INSERT WEBAPP WALLET ///////////////
+                    $webapp_amount = $new_total * $webapp;
+                    
+                    WalletWebapp::create([
+                        'transaction_date'=>$now,
+                        'bet_id'=>$betid,
+                        'event_id'=>$event_id,
+                        'transaction_type'=>"Betting Commission",
+                        'debit' =>$webapp_amount,
+                        'transaction_reference'=>$payment_ref
+                        ]);
+            
+                    /////////////// END INSERT WEBAPP WALLET ///////////////
+
+                    /////////////// INSERT LIAISON WALLET ///////////////
+                    $liaison_amount = $new_total * $liaison;
+                    
+                    WalletLiaison::create([
+                        'transaction_date'=>$now,
+                        'liaison_id'=>$liaison_id,
+                        'bet_id'=>$betid,
+                        'event_id'=>$event_id,
+                        'transaction_type'=>"Betting Commission",
+                        'debit' =>$liaison_amount,
+                        'transaction_reference'=>$payment_ref
+                        ]);
+
+                    $wallet_liai = User::find($liaison_id);
+                    $new_wallet_liai = $wallet_liai->curr_wallet + $liaison_amount;
+                    $wallet_liai->curr_wallet=$new_wallet_liai;
+                    $wallet_liai->save();
+            
+                    /////////////// END INSERT LIAISON WALLET ///////////////
+
+                        /////////////// INSERT MISC WALLET ///////////////
+                    $misc_amount = $new_total * $misc;
+                        if($misc_amount>0){
+                            WalletMisc::create([
+                                'transaction_date'=>$now,
+                                'bet_id'=>$betid,
+                                'event_id'=>$event_id,
+                                'transaction_type'=>"Betting Commission",
+                                'debit' =>$misc_amount,
+                                'transaction_reference'=>$payment_ref
+                                ]);
+
+                            $wallet_op = User::find($operator_id);
+                            $new_wallet_op = $wallet_op->curr_wallet + $misc_amount;
+                            $wallet_op->curr_wallet=$new_wallet_op;
+                            $wallet_op->save();
+                        }
+            
+                    /////////////// END INSERT MISC WALLET ///////////////
+
+                    return redirect()->route('dashboard_phakbet')->with('status','success')->with('message_success','Congratulations! You have successfully placed your bet for an event.');
+               
+                        
+            }else {
+                return redirect()->route('dashboard_phakbet')->with('status','fail')->with('message_fail','Sorry! Your bet did not go through. This event had been closed.');
+
+            }
+
+
+            }
+    }
+
+
     public function forgot_password(Request $request)
     {
         $now=date("Y-m-d H:i:s");

@@ -615,6 +615,7 @@ class ComposerStaticInit6fd1a2d239ec35296e3a19f7e2db9f8d
         'App\\Models\\LoginLogs' => __DIR__ . '/../..' . '/app/Models/LoginLogs.php',
         'App\\Models\\PercentageDivision' => __DIR__ . '/../..' . '/app/Models/PercentageDivision.php',
         'App\\Models\\QuestionBank' => __DIR__ . '/../..' . '/app/Models/QuestionBank.php',
+        'App\\Models\\RaffleCombination' => __DIR__ . '/../..' . '/app/Models/RaffleCombination.php',
         'App\\Models\\RegisterMayor' => __DIR__ . '/../..' . '/app/Models/RegisterMayor.php',
         'App\\Models\\SmsOut' => __DIR__ . '/../..' . '/app/Models/SmsOut.php',
         'App\\Models\\TransactionHistory' => __DIR__ . '/../..' . '/app/Models/TransactionHistory.php',

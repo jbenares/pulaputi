@@ -119,6 +119,7 @@
                     @php $count=1; @endphp
                     @foreach($events AS $ev)
                      @php $countbet = countUserBet($userid,$ev->id); @endphp
+                     @php $raffle = getGameCatDetails($ev->game_category_id, 'given_choices'); @endphp
                     <div class="w-full" id="event_block_{{ $count }}">
                         <div class="relative  w-full px-4 py-6 bg-white shadow-lg dark:bg-gray-700">
                             <div class="flex items-center justify-between ">
@@ -175,15 +176,27 @@
                             <br>
                             <input type="hidden" name="date_end_{{ $count }}" id="date_end_{{ $count }}" value="{{ $ev->date_end }}">
                             <input type="hidden" name="curr_wallet" id="curr_wallet" value="{{ $curr_wallet }}">
+                            <center>
                             @if($countbet==0)
-                                <button type="button" data-modal-target="authentication-modal-{{ $count }}" id="join_button_{{ $count }}" data-modal-toggle="authentication-modal-{{ $count }}" class="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+                                @if($raffle == 0)
+                                <button type="button" data-modal-target="authentication-modal-{{ $count }}" id="join_button_{{ $count }}" data-modal-toggle="authentication-modal-{{ $count }}" class="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-max transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                                     Join Event
                                 </button>
+                                @else
+                                    <div style='padding-top:15px'></div>
+                                    <a href="{{ route('raffle_reservation',$ev->id, $ev->game_category_id) }}" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-max transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">Join Event</a>
+                                @endif
                             @else 
+                                 @if($raffle == 0)
                                 <button type="button" data-modal-target="authentication-modal-{{ $count }}"  id="join_button_{{ $count }}" data-modal-toggle="authentication-modal-{{ $count }}" class="py-2 px-4  bg-green-600 hover:bg-green-700 focus:ring-green-500 focus:ring-offset-green-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
                                     Make Another Bet
                                 </button>
+                                @else
+                                <div style='padding-top:15px'></div>
+                                <a href="{{ route('raffle_reservation',$ev->id, $ev->game_category_id) }}" class="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-max transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">Make Another Bet</a>
+                                @endif
                             @endif
+                            </center>
                         </div>
                         
                     </div>

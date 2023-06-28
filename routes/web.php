@@ -125,7 +125,7 @@ Route::get('joined', [EventsController::class, 'joined'])->name('joinedevents')-
 Route::post('set_winning_array', [EventsController::class, 'set_winning_array'])->name('set_winning_array')->middleware(['auth', 'verified']); 
 Route::get('event_bettors', [EventsController::class, 'event_bettors'])->name('event_bettors')->middleware(['auth', 'verified']);
 Route::get('viewbettors/{id}', [EventsController::class, 'viewbettors'])->name('viewbettors')->middleware(['auth', 'verified']);
-
+Route::get('raffle_reservation/{id}', [EventsController::class, 'raffle_reservation'])->name('raffle_reservation')->middleware(['auth', 'verified']);
 
 Route::resource('transactionhistory', TransactionHistoryController::class)->middleware(['auth', 'verified']);
 Route::get('transactionreceipt/{id}', [TransactionHistoryController::class, 'transaction_receipt'])->name('transactionreceipt')->middleware(['auth', 'verified']); 
@@ -162,6 +162,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 });
 
 Route::post('place_bet', [UsersController::class, 'place_bet'])->name('place_bet')->middleware(['auth', 'verified']); 
+Route::post('place_bet_raffle', [UsersController::class, 'place_bet_raffle'])->name('place_bet_raffle')->middleware(['auth', 'verified']); 
 Route::post('place_bet_admin', [DashboardController::class, 'place_bet_admin'])->name('place_bet_admin')->middleware(['auth', 'verified']); 
 
 Route::get('king_heirarchy', [HeirarchyController::class, 'king_heirarchy'])->name('king_heirarchy')->middleware(['auth', 'verified']); 
