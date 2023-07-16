@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 08, 2023 at 02:12 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Host: localhost
+-- Generation Time: Jul 16, 2023 at 04:57 AM
+-- Server version: 10.2.44-MariaDB
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_phakbet`
+-- Database: `phakbet_main`
 --
 
 -- --------------------------------------------------------
@@ -1150,20 +1151,6 @@ CREATE TABLE `city` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `region_code` int(11) NOT NULL DEFAULT 0,
   `city_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `config`
---
-
-CREATE TABLE `config` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `maintenance` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `phakbet_logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2393,17 +2380,28 @@ INSERT INTO `events` (`id`, `king_id`, `event_name`, `date_start`, `date_end`, `
 (1224, 1, 'PhakLotto  Swertres // 2pm', '2023-05-31 03:16:00', '2023-06-02 14:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685474203.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-03 17:46:54', 2, '', '0, 1, 6', 0, '0.00', 0, 0, 0, '1685843214.png', 'https://www.lottopcso.com/pcso-lotto-result-june-2-2023/'),
 (1225, 1, 'PhakLotto  Swertres // 5pm', '2023-05-31 03:16:00', '2023-06-02 17:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685474225.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-03 17:45:08', 2, '', '3, 2, 9', 0, '0.00', 0, 0, 0, '1685843108.png', 'https://www.lottopcso.com/pcso-lotto-result-june-2-2023/'),
 (1226, 1, 'PhakLotto  Swertres // 9pm', '2023-05-31 03:17:00', '2023-06-02 21:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685474248.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-03 17:43:23', 2, '', '1, 7, 0', 0, '0.00', 0, 0, 0, '1685843003.png', 'https://www.lottopcso.com/pcso-lotto-result-june-2-2023/'),
-(1227, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 1st Quarter Score // Ez2', '2023-06-05 00:35:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>1st Quarter Scores are<br>Miami Heat: 32<br>Denver Nuggets: 34<br>Winning Combination: 2 / 4<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896529.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1228, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 2nd Quarter Score // Ez2', '2023-06-05 00:35:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>2nd Quarter Scores are<br>Miami Heat: 23<br>Denver Nuggets: 26<br>Winning Combination: 3 / 6<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896558.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1229, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 3rd Quarter Score // Ez2', '2023-06-05 00:36:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>3rd Quarter Scores are<br>Miami Heat: 21<br>Denver Nuggets: 32<br>Winning Combination: 1 / 2<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896584.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1230, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 4th Quarter Score // Ez2', '2023-06-05 00:36:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>4th Quarter Scores are<br>Miami Heat: 19<br>Denver Nuggets: 28<br>Winning Combination: 9 / 8<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896606.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1231, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets Final Score // Ez2', '2023-06-05 00:36:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat):<br>Second Digit(Denver Nuggets):<br>Example:<br>Final Scores are<br>Miami Heat: 99<br>Denver Nuggets: 102<br>Winning Combination: 9 / 2<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896629.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1232, 1, 'PhakLotto  Ez2 // 2pm', '2023-06-05 00:46:00', '2023-06-05 14:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897203.jpg', '300.00', '10.00', '300.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1233, 1, 'PhakLotto  Ez2 // 5pm', '2023-06-05 00:46:00', '2023-06-05 17:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897228.jpg', '300.00', '10.00', '300.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1234, 1, 'PhakLotto  Ez2 // 9pm', '2023-06-05 00:47:00', '2023-06-05 21:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897254.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 10, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1235, 1, 'PhakLotto  Swertres // 2pm', '2023-06-05 00:47:00', '2023-06-05 14:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897279.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 2, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1236, 1, 'PhakLotto  Swertres // 5pm', '2023-06-05 00:48:00', '2023-06-05 17:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897316.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 2, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL),
-(1237, 1, 'PhakLotto  Swertres // 9pm', '2023-06-05 00:48:00', '2023-06-05 21:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897349.jpg', '500.00', '10.00', '500.00', 0, NULL, NULL, 2, '', NULL, 0, '0.00', 0, 0, 0, NULL, NULL);
+(1227, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 1st Quarter Score // Ez2', '2023-06-05 00:35:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>1st Quarter Scores are<br>Miami Heat: 32<br>Denver Nuggets: 34<br>Winning Combination: 2 / 4<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896529.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:45:51', 10, '', '6, 3', 0, '0.00', 0, 0, 0, '1686300351.png', 'https://www.foxsports.com/scores/nba'),
+(1228, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 2nd Quarter Score // Ez2', '2023-06-05 00:35:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>2nd Quarter Scores are<br>Miami Heat: 23<br>Denver Nuggets: 26<br>Winning Combination: 3 / 6<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896558.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:47:10', 10, '', '5, 4', 0, '0.00', 0, 0, 0, '1686300430.png', 'https://www.foxsports.com/scores/nba'),
+(1229, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 3rd Quarter Score // Ez2', '2023-06-05 00:36:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>3rd Quarter Scores are<br>Miami Heat: 21<br>Denver Nuggets: 32<br>Winning Combination: 1 / 2<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896584.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:48:29', 10, '', '4, 6', 0, '0.00', 0, 0, 0, '1686300509.png', 'https://www.foxsports.com/scores/nba'),
+(1230, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets 4th Quarter Score // Ez2', '2023-06-05 00:36:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat): 0-9<br>Second Digit(Denver Nuggets): 0-9<br>Example:<br>4th Quarter Scores are<br>Miami Heat: 19<br>Denver Nuggets: 28<br>Winning Combination: 9 / 8<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896606.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:55:34', 10, '', '6, 5', 0, '0.00', 0, 0, 0, '1686300934.png', 'https://www.foxsports.com/scores/nba'),
+(1231, 1, 'June 5[NBA] Miami Heat vs Denver Nuggets Final Score // Ez2', '2023-06-05 00:36:00', '2023-06-05 08:00:00', '<p>Instructions:<br>First Digit(Miami Heat):<br>Second Digit(Denver Nuggets):<br>Example:<br>Final Scores are<br>Miami Heat: 99<br>Denver Nuggets: 102<br>Winning Combination: 9 / 2<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1685896629.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 01:01:20', 10, '', '1, 8', 0, '0.00', 0, 0, 0, '1686301280.png', 'https://www.foxsports.com/scores/nba'),
+(1232, 1, 'PhakLotto  Ez2 // 2pm', '2023-06-05 00:46:00', '2023-06-05 14:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897203.jpg', '300.00', '10.00', '300.00', 1, NULL, '2023-06-09 00:41:05', 10, '', '4, 7', 0, '0.00', 0, 0, 0, '1686300065.png', 'https://www.lottopcso.com/pcso-lotto-result-june-5-2023/'),
+(1233, 1, 'PhakLotto  Ez2 // 5pm', '2023-06-05 00:46:00', '2023-06-05 17:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897228.jpg', '300.00', '10.00', '300.00', 1, NULL, '2023-06-09 00:37:16', 10, '', '2, 5', 0, '0.00', 0, 0, 0, '1686299836.png', 'https://www.lottopcso.com/pcso-lotto-result-june-5-2023/'),
+(1234, 1, 'PhakLotto  Ez2 // 9pm', '2023-06-05 00:47:00', '2023-06-05 21:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897254.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:34:16', 10, '', '6, 5', 0, '0.00', 0, 0, 0, '1686299656.png', 'https://www.lottopcso.com/pcso-lotto-result-june-5-2023/'),
+(1235, 1, 'PhakLotto  Swertres // 2pm', '2023-06-05 00:47:00', '2023-06-05 14:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897279.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:42:32', 2, '', '1, 4, 2', 0, '0.00', 0, 0, 0, '1686300152.png', 'https://www.lottopcso.com/pcso-lotto-result-june-5-2023/'),
+(1236, 1, 'PhakLotto  Swertres // 5pm', '2023-06-05 00:48:00', '2023-06-05 17:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897316.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:39:04', 2, '', '9, 0, 4', 0, '0.00', 0, 0, 0, '1686299944.png', 'https://www.lottopcso.com/pcso-lotto-result-june-5-2023/'),
+(1237, 1, 'PhakLotto  Swertres // 9pm', '2023-06-05 00:48:00', '2023-06-05 21:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1685897349.jpg', '500.00', '10.00', '500.00', 1, NULL, '2023-06-09 00:35:49', 2, '', '9, 5, 5', 0, '0.00', 0, 0, 0, '1686299749.png', 'https://www.lottopcso.com/pcso-lotto-result-june-5-2023/'),
+(1238, 1, 'June 18[PBA] Meralco Bolts vs Terrafirma DYIP 1st Quarter Score // Ez2', '2023-06-17 17:52:00', '2023-06-18 17:00:00', '<p>Instructions:&nbsp;<br>First Digit(Meralco Bolts): 0-9&nbsp;<br>Second Digit(Terrafirma DYIP): 0-9&nbsp;<br>Example: &nbsp;<br>1st Quarter Scores are&nbsp;<br>Meralco Bolts: 32&nbsp;<br>Terrafirma DYIP: 34&nbsp;<br>Winning Combination: 2 / 4&nbsp;<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1686995571.png', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:50', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1239, 1, 'June 18[PBA] Meralco Bolts vs Terrafirma DYIP 2nd Quarter Score // Ez2', '2023-06-17 17:53:00', '2023-06-18 17:00:00', '<p>Instructions:&nbsp;<br>First Digit(Meralco Bolts): 0-9&nbsp;<br>Second Digit(Terrafirma DYIP): 0-9<br>Example:<br>2nd Quarter Scores are<br>Meralco Bolts: 23<br>Terrafirma DYIP: 26<br>Winning Combination: 3 / 6<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1686995594.png', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:50', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1240, 1, 'June 18[PBA] Meralco Bolts vs Terrafirma DYIP 3rd Quarter Score // Ez2', '2023-06-17 17:54:00', '2023-06-18 17:00:00', '<p>Instructions:<br>First Digit(Meralco Bolts): 0-9<br>Second Digit(Terrafirma DYIP): 0-9<br>Example:<br>3rd Quarter Scores are<br>Meralco Bolts: 21<br>Terrafirma DYIP: 32<br>Winning Combination: 1 / 2<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1686995654.png', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:51', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1241, 1, 'June 18[PBA] Meralco Bolts vs Terrafirma DYIP 4th Quarter Score // Ez2', '2023-06-17 17:54:00', '2023-06-18 17:00:00', '<p>Instructions:<br>First Digit(Meralco Bolts): 0-9<br>Second Digit(Terrafirma DYIP): 0-9<br>Example:<br>4th Quarter Scores are<br>Meralco Bolts: 19<br>Terrafirma DYIP: 28<br>Winning Combination: 9 / 8<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1686995684.png', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:50', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1242, 1, 'June 18[PBA] Meralco Bolts vs Terrafirma DYIP Final Score // Ez2', '2023-06-17 17:55:00', '2023-06-18 17:00:00', '<p>Instructions:<br>First Digit(Meralco Bolts):<br>Second Digit(Terrafirma DYIP):<br>Example:<br>Final Scores are<br>Meralco Bolts: 99<br>Terrafirma DYIP: 102<br>Winning Combination: 9 / 2<br>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE GAME ENDS**</p>', '1686995709.png', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:50', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1243, 1, 'PhakLotto  Ez2 // 2pm', '2023-06-17 17:56:00', '2023-06-18 14:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1686995804.jpg', '300.00', '10.00', '300.00', 0, NULL, '2023-06-19 06:52:51', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1244, 1, 'PhakLotto  Ez2 // 5pm', '2023-06-17 17:56:00', '2023-06-18 17:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1686995827.jpg', '300.00', '10.00', '300.00', 0, NULL, '2023-06-19 06:52:51', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1245, 1, 'PhakLotto  Ez2 // 9pm', '2023-06-17 17:57:00', '2023-06-18 21:00:00', '<p>Instructions:&nbsp;</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;</p>\r\n<p>Example:&nbsp;<br>If lotto draw is 21 / 23&nbsp;<br>Then Winning Combination is : 1 / 3&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1686995852.jpg', '300.00', '10.00', '300.00', 0, NULL, '2023-06-19 06:52:51', 10, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1246, 1, 'PhakLotto  Swertres // 2pm', '2023-06-17 17:57:00', '2023-06-18 14:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1686995874.jpg', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:50', 2, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1247, 1, 'PhakLotto  Swertres // 5pm', '2023-06-17 17:58:00', '2023-06-18 17:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1686995900.jpg', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:51', 2, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL),
+(1248, 1, 'PhakLotto  Swertres // 9pm', '2023-06-17 17:58:00', '2023-06-18 21:00:00', '<p>Instructions</p>\r\n<p>first digit: 0-9&nbsp;<br>second digit: 0-9&nbsp;<br>third digit: 0-9&nbsp;<br>Example:&nbsp;<br>If lotto draw is &nbsp;1 / 5 / 9&nbsp;<br>Then Winning Combination is : 1 / 5 / 9&nbsp;</p>\r\n<p>**RESULTS WILL BE POSTED 30 MINUTES AFTER THE DRAW ENDS**</p>', '1686995918.jpg', '500.00', '10.00', '500.00', 0, NULL, '2023-06-19 06:52:51', 2, '', NULL, 0, '0.00', 0, 1, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2428,7 +2426,7 @@ CREATE TABLE `event_no_wins` (
 --
 
 INSERT INTO `event_no_wins` (`id`, `king_id`, `amount`, `transferred_amount`, `balance`, `transferred_to`, `transfer_date`, `created_at`, `updated_at`) VALUES
-(1, 1, '560613.00', '526200.00', '34413.00', '58, 59, 60, 61, 62, 63, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 115, 116, 117, 118, 119, 120, 121, 122, 123, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 309, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650, 651, 652, 653, 654, 655, 656, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 691, 692, 693, 694, 695, 696, 697, 698, 699, 700, 701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726, 727, 728, 729, 730, 731, 732, 733, 734, 735, 736, 737, 738, 739, 740, 741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767, 768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860, 861, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 880, 881, 882, 883, 884, 885, 886, 887, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1111, 1112, 1113, 1114, 1115, 1116, 1117, 1118, 1119, 1120, 1121, 1122, 1123, 1124, 1125, 1126, 1127, 1128, 1129, 1130, 1131, 1132, 1133, 1134, 1135, 1136, 1137, 1138, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1146, 1147, 1148, 1149, 1150, 1151, 1152, 1153, 1154, 1155, 1156, 1157, 1158, 1159, 1160, 1161, 1162, 1163, 1164, 1165, 1166, 1167, 1168, 1169, 1170, 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180, 1181, 1182, 1183, 1184, 1185, 1186, 1187, 1188, 1189, 1190, 1191, 1192, 1193, 1194, 1195, 1196, 1197, 1198, 1199, 1200, 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211, 1212, 1213, 1214, 1215, 1216, 1217, 1218, 1219, 1220, 1221, 1222, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230, 1231, 1232, 1233, 1234, 1235, 1236, 1237', NULL, '2023-03-25 15:46:28', '2023-06-04 08:49:09');
+(1, 1, '566213.00', '531100.00', '35113.00', '58, 59, 60, 61, 62, 63, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 115, 116, 117, 118, 119, 120, 121, 122, 123, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 309, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572, 573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624, 625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650, 651, 652, 653, 654, 655, 656, 657, 658, 659, 660, 661, 662, 663, 664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 691, 692, 693, 694, 695, 696, 697, 698, 699, 700, 701, 702, 703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714, 715, 716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726, 727, 728, 729, 730, 731, 732, 733, 734, 735, 736, 737, 738, 739, 740, 741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754, 755, 756, 757, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767, 768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 842, 843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860, 861, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 880, 881, 882, 883, 884, 885, 886, 887, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 950, 951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961, 962, 963, 964, 965, 966, 967, 968, 969, 970, 971, 972, 973, 974, 975, 976, 977, 978, 979, 980, 981, 982, 983, 984, 985, 986, 987, 988, 989, 990, 991, 992, 993, 994, 995, 996, 997, 998, 999, 1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020, 1021, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1040, 1041, 1042, 1043, 1044, 1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084, 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094, 1095, 1096, 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1111, 1112, 1113, 1114, 1115, 1116, 1117, 1118, 1119, 1120, 1121, 1122, 1123, 1124, 1125, 1126, 1127, 1128, 1129, 1130, 1131, 1132, 1133, 1134, 1135, 1136, 1137, 1138, 1139, 1140, 1141, 1142, 1143, 1144, 1145, 1146, 1147, 1148, 1149, 1150, 1151, 1152, 1153, 1154, 1155, 1156, 1157, 1158, 1159, 1160, 1161, 1162, 1163, 1164, 1165, 1166, 1167, 1168, 1169, 1170, 1171, 1172, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180, 1181, 1182, 1183, 1184, 1185, 1186, 1187, 1188, 1189, 1190, 1191, 1192, 1193, 1194, 1195, 1196, 1197, 1198, 1199, 1200, 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211, 1212, 1213, 1214, 1215, 1216, 1217, 1218, 1219, 1220, 1221, 1222, 1223, 1224, 1225, 1226, 1227, 1228, 1229, 1230, 1231, 1232, 1233, 1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248', NULL, '2023-03-25 15:46:28', '2023-06-17 01:58:38');
 
 -- --------------------------------------------------------
 
@@ -2533,7 +2531,6 @@ CREATE TABLE `game_category` (
   `option_type` int(11) NOT NULL DEFAULT 0 COMMENT '1=set of questions, 2=range of numbers',
   `no_of_outcomes` int(11) NOT NULL DEFAULT 0,
   `firsttime` int(11) NOT NULL DEFAULT 0,
-  `given_choices` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2542,17 +2539,16 @@ CREATE TABLE `game_category` (
 -- Dumping data for table `game_category`
 --
 
-INSERT INTO `game_category` (`id`, `category_name`, `choice_array`, `win_order`, `option_type`, `no_of_outcomes`, `firsttime`, `given_choices`, `created_at`, `updated_at`) VALUES
-(1, '2-number lottery', '0-9', 3, 2, 2, 0, 0, NULL, NULL),
-(2, '3-number lottery', '0-9', 3, 2, 3, 0, 0, NULL, NULL),
-(3, 'Boxing Betting (3 Questions)', NULL, 3, 1, 3, 0, 0, NULL, NULL),
-(4, 'Soccer Betting (3 Questions)', NULL, 3, 1, 3, 0, 0, NULL, NULL),
-(5, 'Basketball Betting (3 Questions)', NULL, 3, 1, 3, 0, 0, NULL, NULL),
-(7, 'Basketball Betting (2 Questions)', NULL, 3, 1, 2, 0, 0, NULL, NULL),
-(8, 'Boxing Betting (2 Questions)', NULL, 3, 1, 2, 0, 0, NULL, NULL),
-(9, 'Soccer Betting (2 Questions)', NULL, 3, 1, 2, 0, 0, NULL, NULL),
-(10, 'Easy2-Target', '0-9', 3, 2, 2, 0, 0, NULL, NULL),
-(11, 'Raffle', NULL, 3, 2, 2, 0, 1, NULL, NULL);
+INSERT INTO `game_category` (`id`, `category_name`, `choice_array`, `win_order`, `option_type`, `no_of_outcomes`, `firsttime`, `created_at`, `updated_at`) VALUES
+(1, '2-number lottery', '0-9', 3, 2, 2, 0, NULL, NULL),
+(2, '3-number lottery', '0-9', 3, 2, 3, 0, NULL, NULL),
+(3, 'Boxing Betting (3 Questions)', NULL, 3, 1, 3, 0, NULL, NULL),
+(4, 'Soccer Betting (3 Questions)', NULL, 3, 1, 3, 0, NULL, NULL),
+(5, 'Basketball Betting (3 Questions)', NULL, 3, 1, 3, 0, NULL, NULL),
+(7, 'Basketball Betting (2 Questions)', NULL, 3, 1, 2, 0, NULL, NULL),
+(8, 'Boxing Betting (2 Questions)', NULL, 3, 1, 2, 0, NULL, NULL),
+(9, 'Soccer Betting (2 Questions)', NULL, 3, 1, 2, 0, NULL, NULL),
+(10, 'Easy2-Target', '0-9', 3, 2, 2, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2584,7 +2580,7 @@ INSERT INTO `login_logs` (`id`, `user_id`, `login_count`, `last_login`, `created
 (8, 74, 1, '2023-03-26 15:11:43', '2023-03-25 23:11:43', '2023-03-25 23:11:43'),
 (9, 76, 11, '2023-04-11 17:12:12', '2023-03-25 23:28:18', '2023-04-11 01:12:12'),
 (10, 70, 2, '2023-03-27 09:37:48', '2023-03-26 00:22:08', '2023-03-26 17:37:48'),
-(11, 71, 107, '2023-06-05 11:30:30', '2023-03-26 01:18:31', '2023-06-04 19:30:30'),
+(11, 71, 128, '2023-07-14 23:18:04', '2023-03-26 01:18:31', '2023-07-14 07:18:04'),
 (12, 78, 3, '2023-03-27 20:13:54', '2023-03-26 01:58:40', '2023-03-27 04:13:54'),
 (13, 75, 85, '2023-06-02 05:15:19', '2023-03-26 02:39:55', '2023-06-01 13:15:19'),
 (14, 81, 6, '2023-04-22 22:17:28', '2023-03-26 04:17:11', '2023-04-22 06:17:28'),
@@ -2596,7 +2592,7 @@ INSERT INTO `login_logs` (`id`, `user_id`, `login_count`, `last_login`, `created
 (20, 92, 5, '2023-03-28 11:31:52', '2023-03-27 18:45:02', '2023-03-27 19:31:52'),
 (21, 91, 6, '2023-04-13 17:01:48', '2023-03-27 22:47:59', '2023-04-13 01:01:48'),
 (22, 95, 21, '2023-04-22 08:49:18', '2023-03-29 01:17:33', '2023-04-21 16:49:18'),
-(23, 96, 11, '2023-04-05 12:03:02', '2023-03-29 02:04:20', '2023-04-04 20:03:02'),
+(23, 96, 12, '2023-06-18 20:52:56', '2023-03-29 02:04:20', '2023-06-18 04:52:56'),
 (24, 97, 1, '2023-03-29 19:09:11', '2023-03-29 03:09:11', '2023-03-29 03:09:11'),
 (25, 98, 7, '2023-04-17 11:05:48', '2023-03-29 07:11:30', '2023-04-16 19:05:48'),
 (26, 100, 3, '2023-03-30 17:02:28', '2023-03-30 00:33:47', '2023-03-30 01:02:28'),
@@ -2606,7 +2602,7 @@ INSERT INTO `login_logs` (`id`, `user_id`, `login_count`, `last_login`, `created
 (30, 105, 2, '2023-03-31 10:45:11', '2023-03-30 01:59:53', '2023-03-30 18:45:11'),
 (31, 101, 12, '2023-04-05 22:55:09', '2023-03-30 18:11:42', '2023-04-05 06:55:09'),
 (32, 99, 2, '2023-04-01 07:21:11', '2023-03-31 03:59:06', '2023-03-31 15:21:11'),
-(33, 107, 6, '2023-04-25 13:04:49', '2023-03-31 07:38:16', '2023-04-24 21:04:49'),
+(33, 107, 7, '2023-07-14 20:06:49', '2023-03-31 07:38:16', '2023-07-14 04:06:49'),
 (34, 110, 6, '2023-04-01 19:35:11', '2023-04-01 03:16:37', '2023-04-01 03:35:11'),
 (35, 111, 1, '2023-04-01 19:55:34', '2023-04-01 03:55:34', '2023-04-01 03:55:34'),
 (36, 113, 3, '2023-04-11 23:10:59', '2023-04-01 05:31:06', '2023-04-11 07:10:59'),
@@ -2628,7 +2624,7 @@ INSERT INTO `login_logs` (`id`, `user_id`, `login_count`, `last_login`, `created
 (52, 123, 1, '2023-04-05 20:58:42', '2023-04-05 04:58:42', '2023-04-05 04:58:42'),
 (53, 127, 7, '2023-04-19 18:23:19', '2023-04-05 16:52:56', '2023-04-19 02:23:19'),
 (54, 130, 6, '2023-05-19 06:02:52', '2023-04-05 17:50:46', '2023-05-18 14:02:52'),
-(55, 131, 6, '2023-04-19 10:09:08', '2023-04-05 22:52:02', '2023-04-18 18:09:08'),
+(55, 131, 7, '2023-06-15 15:15:35', '2023-04-05 22:52:02', '2023-06-14 23:15:35'),
 (56, 133, 8, '2023-05-10 14:13:55', '2023-04-06 02:34:16', '2023-05-09 22:13:55'),
 (57, 134, 4, '2023-05-01 22:29:51', '2023-04-06 06:51:38', '2023-05-01 06:29:51'),
 (58, 135, 4, '2023-05-13 08:07:12', '2023-04-06 07:01:39', '2023-05-12 16:07:12'),
@@ -2773,9 +2769,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (64, '2023_03_07_105751_add_column_to_wallet_pot_table', 37),
 (65, '2023_03_07_105806_add_column_to_wallet_tax_table', 38),
 (66, '2023_03_07_105830_add_column_to_wallet_webapp_table', 39),
-(67, '2023_03_07_141940_add_column_to_users_table', 40),
-(68, '2023_03_08_133530_create_config_table', 41),
-(69, '2023_03_07_113731_create_raffle_combination_table', 42);
+(67, '2023_03_07_141940_add_column_to_users_table', 40);
 
 -- --------------------------------------------------------
 
@@ -3000,20 +2994,6 @@ INSERT INTO `question_bank` (`id`, `game_category_id`, `question`, `instruction`
 (130, 8, 'Connect Percentages - jab % landed by loser', 'Bet on last digit of jab % landed by loser. Choices: 0-9', '0-9', NULL, NULL),
 (131, 8, 'Connect Percentages - power % landed by loser', 'Bet on last digit of power % landed by loser. Choices: 0-9', '0-9', NULL, NULL),
 (132, 8, 'Knockdown - total', 'Bet on how many knockdowns will occur in a match. Choices: 0-5. More than 5 knockdowns will be counted as 5', '0-5', NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `raffle_combination`
---
-
-CREATE TABLE `raffle_combination` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `event_id` bigint(20) UNSIGNED NOT NULL,
-  `combination` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3271,7 +3251,15 @@ INSERT INTO `sms_out` (`id`, `sms_to`, `sms_text`, `sms_from`, `sms_sent_flag`, 
 (193, '09062162087', 'Winner Winner Chicken Dinner! You\'ve won P300.5 from Dos Por Dos!! Ez2 Easy Win!!. Total pot is 300.50 and there are a total of 1 winners. Happy Phaking!', '+639668096065', 1, '2023-04-30 17:44:00', '2023-04-30 09:44:00', '2023-04-30 09:44:00'),
 (194, '09996863588', 'Thanks for registering to Phakbet. Your password is CEb5PtLjAe', '+639668096065', 1, '2023-05-08 07:56:51', '2023-05-07 23:56:51', '2023-05-07 23:56:51'),
 (195, '09996863588', 'Hello! Your new Phakbet password is hxov.', '+639668096065', 1, '2023-05-08 08:09:50', '2023-05-08 00:09:50', '2023-05-08 00:09:50'),
-(196, '09190000023', 'Winner Winner Chicken Dinner! You\'ve won P300.5 from Dos Por Dos!! Ez2 Easy Win!!. Total pot is 300.50 and there are a total of 1 winners. Happy Phaking!', '+639668096065', 1, '2023-05-21 17:29:03', '2023-05-21 09:29:03', '2023-05-21 09:29:03');
+(196, '09190000023', 'Winner Winner Chicken Dinner! You\'ve won P300.5 from Dos Por Dos!! Ez2 Easy Win!!. Total pot is 300.50 and there are a total of 1 winners. Happy Phaking!', '+639668096065', 1, '2023-05-21 17:29:03', '2023-05-21 09:29:03', '2023-05-21 09:29:03'),
+(197, '09663417131', 'Hello! Your new Phakbet password is kAGC.', '+639668096065', 1, '2023-06-10 18:39:27', '2023-06-10 10:39:27', '2023-06-10 10:39:27'),
+(198, '09663417131', 'Hello! Your new Phakbet password is 2Q9L.', '+639668096065', 1, '2023-06-10 18:39:51', '2023-06-10 10:39:51', '2023-06-10 10:39:51'),
+(199, '09065073253', 'Hello! Your new Phakbet password is hzrK.', '+639668096065', 1, '2023-06-10 18:40:09', '2023-06-10 10:40:09', '2023-06-10 10:40:09'),
+(200, '09065073253', 'Hello! Your new Phakbet password is UyWa.', '+639668096065', 1, '2023-06-10 18:40:59', '2023-06-10 10:40:59', '2023-06-10 10:40:59'),
+(201, '09065073253', 'Hello! Your new Phakbet password is NhgW.', '+639668096065', 1, '2023-06-10 18:41:20', '2023-06-10 10:41:20', '2023-06-10 10:41:20'),
+(202, '09065073253', 'Hello! Your new Phakbet password is 0SU2.', '+639668096065', 1, '2023-06-10 18:42:18', '2023-06-10 10:42:18', '2023-06-10 10:42:18'),
+(203, '09065073253', 'Hello! Your new Phakbet password is HrpY.', '+639668096065', 1, '2023-06-10 19:16:39', '2023-06-10 11:16:39', '2023-06-10 11:16:39'),
+(204, '09663417131', 'Hello! Your new Phakbet password is 8mHU.', '+639668096065', 1, '2023-06-14 23:19:16', '2023-06-14 15:19:16', '2023-06-14 15:19:16');
 
 -- --------------------------------------------------------
 
@@ -3314,11 +3302,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `date_registered`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `usertype`, `username`, `region_code`, `region`, `city`, `user_image`, `mobile`, `gcash`, `maya`, `coridor_id`, `mayor_id`, `king_id`, `ref_code`, `curr_wallet`, `banned`, `date_banned`, `first_time_logged_in`, `confirmation_code`) VALUES
-(1, NULL, 'Julius Sotomil', 'jsotomil@yahoo.com', NULL, '$2y$10$Nbqy0ncTY2Nqz16trlpnD.xUe6p6//IrQhsbGjJzR.xXVRUosn3P6', 'lpZpg4L0GdgRVxMBRolwSadGqkMMhTyO0dlQ2uaLgFmXeYciamIrtFoaTjNx', NULL, '2023-06-01 23:57:56', 'King', NULL, NULL, NULL, NULL, NULL, '09668096065', NULL, NULL, 0, 0, 0, 'julius', '13266.50', 0, NULL, 0, NULL),
+(1, NULL, 'Julius Sotomil', 'jsotomil@yahoo.com', NULL, '$2y$10$Nbqy0ncTY2Nqz16trlpnD.xUe6p6//IrQhsbGjJzR.xXVRUosn3P6', 'U85WKs74Cgdu3XSQie7aBHdxh9LzJXAYGHSvh75Tgs5OrmHYOoYbhcjF6sDC', NULL, '2023-06-01 23:57:56', 'King', NULL, NULL, NULL, NULL, NULL, '09668096065', NULL, NULL, 0, 0, 0, 'julius', '13266.50', 0, NULL, 0, NULL),
 (20, NULL, 'Liaison Default', 'liaison1989@gmail.com', NULL, '$2y$10$Nbqy0ncTY2Nqz16trlpnD.xUe6p6//IrQhsbGjJzR.xXVRUosn3P6', 'JrzzxvKRMfkISg4i2Vi3vmI0wQCM2XBlpQjpQu0uAsipDj5D9XN1j8jvm5fQ', NULL, '2023-06-01 23:57:56', 'Liaison', NULL, '07', 'Central Visayas', 'Cebu City', NULL, '11111111111', NULL, NULL, 0, 0, 1, 'abcdefg', '382.00', 0, NULL, 0, NULL),
 (21, '2023-03-09 06:57:36', 'Jonah Faye Benares', 'jonahbenares@gmail.com', NULL, '$2y$10$Nbqy0ncTY2Nqz16trlpnD.xUe6p6//IrQhsbGjJzR.xXVRUosn3P6', NULL, NULL, '2023-04-07 05:58:30', 'Admin', NULL, NULL, NULL, NULL, NULL, '09324515369', NULL, NULL, 0, 0, 0, 'jonah', '0.00', 0, NULL, 0, NULL),
 (24, '2023-03-12 12:40:15', 'Weng', 'disabled_weng1980@gmail.com', NULL, '$2y$10$MSlxy3MdL.2o/tGsLtV99uyNm4MhhtjuPREHcPm2WWVTrY87LCjXm', NULL, NULL, '2023-03-26 18:36:18', 'Mayor', NULL, '07', 'Central Visayas', 'Cebu City', NULL, '09168531418', NULL, NULL, 0, 0, 1, 'Dd7h8Qo', '4317.00', 1, '2023-03-28', 0, NULL),
-(27, '2023-03-12 16:21:34', 'Topher Miranda', 'topher@yahoo.com', NULL, '$2y$10$Nbqy0ncTY2Nqz16trlpnD.xUe6p6//IrQhsbGjJzR.xXVRUosn3P6', 'l5yq8BJ5awhPkQgmMrjQqlt6gfQUNbYtp8rlw8o6Q68qjVXzS40mWVeqTEgC', NULL, '2023-05-18 13:50:38', 'Mayor', NULL, '07', 'Central Visayas', 'Cebu City', '1680104994.jpg', '09065073253', '09065073253', NULL, 0, 0, 1, 'bv48etu', '5162.00', 0, NULL, 0, NULL),
+(27, '2023-03-12 16:21:34', 'Topher Miranda', 'topher@yahoo.com', NULL, '$2y$10$Fslr/Hz1opkEIlN3O2vOw.VzW6XPI8XNAnoo/AT1JADvQztbHJZ7K', 'l5yq8BJ5awhPkQgmMrjQqlt6gfQUNbYtp8rlw8o6Q68qjVXzS40mWVeqTEgC', NULL, '2023-06-10 03:16:39', 'Mayor', NULL, '07', 'Central Visayas', 'Cebu City', '1680104994.jpg', '09065073253', '09065073253', NULL, 0, 0, 1, 'bv48etu', '5162.00', 0, NULL, 0, NULL),
 (46, NULL, 'Jose Martin Benares', 'martin11ph@gmail.com', NULL, '$2y$10$MSlxy3MdL.2o/tGsLtV99uyNm4MhhtjuPREHcPm2WWVTrY87LCjXm', NULL, NULL, '2023-04-01 19:44:02', 'Admin', NULL, '07', 'Central Visayas', 'Cebu City', NULL, '09332073866', NULL, NULL, 0, 0, 1, 'martin', '0.00', 0, NULL, 0, NULL),
 (57, NULL, 'Operator Default', 'operator1989@gmail.com', NULL, '$2y$10$Nbqy0ncTY2Nqz16trlpnD.xUe6p6//IrQhsbGjJzR.xXVRUosn3P6', 'ae4VLCMkwuR3KDsB4DxffSlyp1UK1cOt7xYPmonIEAb45bAp1S2B3Qzz1Wbk', NULL, '2023-06-01 23:57:56', 'Operator', NULL, '06', 'Western Visayas', 'Bacolod City', NULL, '00000000000', NULL, NULL, 0, 0, 0, '111aac', '3056.00', 0, NULL, 0, NULL),
 (63, '2023-03-26 10:40:40', 'Motoy', NULL, NULL, '$2y$10$JVxokjwj464puviSQy2jgOPBTVEP.MGWvKxMeB11AwuI38dNZPpzC', NULL, NULL, '2023-05-28 23:38:29', 'Coridor', NULL, '07', 'Central Visayas', 'Cebu City', '1680171748.jpg', '09954788562', NULL, NULL, 0, 27, 1, 'AQJEYBg', '1993.00', 0, NULL, 0, NULL),
@@ -3333,7 +3321,7 @@ INSERT INTO `users` (`id`, `date_registered`, `name`, `email`, `email_verified_a
 (72, '2023-03-26 13:51:35', 'Richie Soriano', NULL, NULL, '$2y$10$ODiGNfWMkLzsVtn1WnrKyeoXyuKxtFPfvK/0OFYksFT6QPKNmBc.u', NULL, NULL, '2023-03-29 17:04:54', 'Phakbet', NULL, '07', 'Central Visayas', 'Cebu City', '1679810862.jpg', '09616413458', NULL, NULL, 63, 27, 1, 'QHEw1qF', '490.00', 0, NULL, 0, NULL),
 (73, '2023-03-26 13:53:54', 'Poy-poy jeps', NULL, NULL, '$2y$10$qtRNKgLz/D/2lYaRclT4SuXSZ05XL1d.Z0ge3EM0NN8Z82dkPvSIi', NULL, NULL, '2023-03-26 06:06:38', 'Coridor', NULL, '07', 'Central Visayas', 'Cebu City', '1679811868.jpg', '09657764120', NULL, NULL, 0, 27, 1, 'wCRpEPn', '0.00', 0, NULL, 0, NULL),
 (74, '2023-03-26 14:59:55', 'Manny Man', NULL, NULL, '$2y$10$1THWcyaSce7l/eGwEcq8Euf8lsH8U9lECCs6dYmWX65LfcincLuNe', NULL, NULL, '2023-03-25 23:16:51', 'Phakbet', NULL, '07', 'Central Visayas', 'Cebu City', '1679815011.jpg', '09999643901', NULL, NULL, 63, 27, 1, 'dMX0Puz', '100.00', 0, NULL, 0, NULL),
-(75, '2023-03-26 15:19:32', 'Tom', NULL, NULL, '$2y$10$rV0bR97YJ7V6xVZZ4IZlFO9GFHLE8N58pnJoZkNLpNKOBaPeDVhte', NULL, NULL, '2023-04-25 08:55:20', 'Coridor', NULL, '07', 'Central Visayas', 'Cebu City', '1680352559.jpg', '09663417131', NULL, NULL, 0, 27, 1, 'psKjPxk', '124.00', 0, NULL, 0, NULL),
+(75, '2023-03-26 15:19:32', 'Tom', NULL, NULL, '$2y$10$p4RwOIbqDKHtiwcXv2dbaeN4z608IWoqajOZwD9UfNlfrYZw0apzW', NULL, NULL, '2023-06-14 07:19:16', 'Coridor', NULL, '07', 'Central Visayas', 'Cebu City', '1680352559.jpg', '09663417131', NULL, NULL, 0, 27, 1, 'psKjPxk', '124.00', 0, NULL, 0, NULL),
 (76, '2023-03-26 15:26:01', 'Allen', NULL, NULL, '$2y$10$8h8W8xlNl68xJZ2ERlIdG.5fm3s39rtv0u6v6Uk2Qrllj8tTw8Y1W', NULL, NULL, '2023-04-11 01:13:57', 'Phakbet', NULL, '07', 'Central Visayas', 'Cebu City', '1679815977.jpg', '09052579300', NULL, NULL, 75, 27, 1, 'kqcvijQ', '4.50', 0, NULL, 0, NULL),
 (77, '2023-03-26 15:35:42', 'Dino F.', NULL, NULL, '$2y$10$8lgJW25PG0tsP2cxIuzhKO4mU7qHQPv/VMHDSM/.4CFTgvi/HEdsa', NULL, NULL, NULL, 'Phakbet', NULL, '07', 'Central Visayas', 'Cebu City', NULL, '09175900629', NULL, NULL, 63, 27, 1, 'vYUQ5jB', '500.00', 0, NULL, 1, NULL),
 (78, '2023-03-26 16:11:22', 'Minang', NULL, NULL, '$2y$10$nf1mwmZf8WgWLPWR7fRG6.HskABWiEk56EDGSro/JWGmyuyWUCZP.', NULL, NULL, '2023-03-27 04:16:57', 'Coridor', NULL, '07', 'Central Visayas', 'Cebu City', NULL, '09227856364', NULL, NULL, 0, 27, 1, 'RfL7h0H', '0.00', 0, NULL, 0, NULL),
@@ -13443,12 +13431,6 @@ ALTER TABLE `city`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `config`
---
-ALTER TABLE `config`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
@@ -13522,15 +13504,7 @@ ALTER TABLE `personal_access_tokens`
 -- Indexes for table `question_bank`
 --
 ALTER TABLE `question_bank`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `question_bank_game_category_id_foreign` (`game_category_id`);
-
---
--- Indexes for table `raffle_combination`
---
-ALTER TABLE `raffle_combination`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `raffle_combination_event_id_foreign` (`event_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `region`
@@ -13659,16 +13633,10 @@ ALTER TABLE `city`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `config`
---
-ALTER TABLE `config`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1238;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1249;
 
 --
 -- AUTO_INCREMENT for table `event_no_wins`
@@ -13698,7 +13666,7 @@ ALTER TABLE `login_logs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `percentage_division`
@@ -13719,12 +13687,6 @@ ALTER TABLE `question_bank`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
--- AUTO_INCREMENT for table `raffle_combination`
---
-ALTER TABLE `raffle_combination`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `region`
 --
 ALTER TABLE `region`
@@ -13740,7 +13702,7 @@ ALTER TABLE `sms_in`
 -- AUTO_INCREMENT for table `sms_out`
 --
 ALTER TABLE `sms_out`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -13864,12 +13826,6 @@ ALTER TABLE `question_bank`
   ADD CONSTRAINT `question_bank_game_category_id_foreign` FOREIGN KEY (`game_category_id`) REFERENCES `game_category` (`id`);
 
 --
--- Constraints for table `raffle_combination`
---
-ALTER TABLE `raffle_combination`
-  ADD CONSTRAINT `raffle_combination_event_id_foreign` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
-
---
 -- Constraints for table `wallet_admin`
 --
 ALTER TABLE `wallet_admin`
@@ -13907,10 +13863,28 @@ ALTER TABLE `wallet_pot`
   ADD CONSTRAINT `wallet_pot_event_id_foreign` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`);
 
 --
+-- Constraints for table `wallet_tax`
+--
+ALTER TABLE `wallet_tax`
+  ADD CONSTRAINT `wallet_tax_bet_id_foreign` FOREIGN KEY (`bet_id`) REFERENCES `bets` (`id`);
+
+--
 -- Constraints for table `wallet_transfers`
 --
 ALTER TABLE `wallet_transfers`
   ADD CONSTRAINT `wallet_transfers_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `wallet_user`
+--
+ALTER TABLE `wallet_user`
+  ADD CONSTRAINT `wallet_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `wallet_webapp`
+--
+ALTER TABLE `wallet_webapp`
+  ADD CONSTRAINT `wallet_webapp_bet_id_foreign` FOREIGN KEY (`bet_id`) REFERENCES `bets` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
